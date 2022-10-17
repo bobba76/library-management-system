@@ -1,0 +1,12 @@
+A:\projects\Library\Library\Library.SharedKernel\bin\Debug\net6.0\Library.SharedKernel.deps.json
+A:\projects\Library\Library\Library.SharedKernel\bin\Debug\net6.0\Library.SharedKernel.dll
+A:\projects\Library\Library\Library.SharedKernel\bin\Debug\net6.0\ref\Library.SharedKernel.dll
+A:\projects\Library\Library\Library.SharedKernel\bin\Debug\net6.0\Library.SharedKernel.pdb
+A:\projects\Library\Library\Library.SharedKernel\obj\Debug\net6.0\Library.SharedKernel.csproj.AssemblyReference.cache
+A:\projects\Library\Library\Library.SharedKernel\obj\Debug\net6.0\Library.SharedKernel.GeneratedMSBuildEditorConfig.editorconfig
+A:\projects\Library\Library\Library.SharedKernel\obj\Debug\net6.0\Library.SharedKernel.AssemblyInfoInputs.cache
+A:\projects\Library\Library\Library.SharedKernel\obj\Debug\net6.0\Library.SharedKernel.AssemblyInfo.cs
+A:\projects\Library\Library\Library.SharedKernel\obj\Debug\net6.0\Library.SharedKernel.csproj.CoreCompileInputs.cache
+A:\projects\Library\Library\Library.SharedKernel\obj\Debug\net6.0\Library.SharedKernel.dll
+A:\projects\Library\Library\Library.SharedKernel\obj\Debug\net6.0\ref\Library.SharedKernel.dll
+A:\projects\Library\Library\Library.SharedKernel\obj\Debug\net6.0\Library.SharedKernel.pdb

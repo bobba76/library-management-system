@@ -1,0 +1,12 @@
+A:\projects\Library\Library\SQLDB\bin\Debug\net6.0\SQLDB.deps.json
+A:\projects\Library\Library\SQLDB\bin\Debug\net6.0\SQLDB.dll
+A:\projects\Library\Library\SQLDB\bin\Debug\net6.0\ref\SQLDB.dll
+A:\projects\Library\Library\SQLDB\bin\Debug\net6.0\SQLDB.pdb
+A:\projects\Library\Library\SQLDB\obj\Debug\net6.0\SQLDB.csproj.AssemblyReference.cache
+A:\projects\Library\Library\SQLDB\obj\Debug\net6.0\SQLDB.GeneratedMSBuildEditorConfig.editorconfig
+A:\projects\Library\Library\SQLDB\obj\Debug\net6.0\SQLDB.AssemblyInfoInputs.cache
+A:\projects\Library\Library\SQLDB\obj\Debug\net6.0\SQLDB.AssemblyInfo.cs
+A:\projects\Library\Library\SQLDB\obj\Debug\net6.0\SQLDB.csproj.CoreCompileInputs.cache
+A:\projects\Library\Library\SQLDB\obj\Debug\net6.0\SQLDB.dll
+A:\projects\Library\Library\SQLDB\obj\Debug\net6.0\ref\SQLDB.dll
+A:\projects\Library\Library\SQLDB\obj\Debug\net6.0\SQLDB.pdb

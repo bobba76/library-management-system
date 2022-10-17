@@ -1,0 +1,15 @@
+A:\projects\Library\Library\Library.Domain\bin\Debug\net6.0\Library.Domain.deps.json
+A:\projects\Library\Library\Library.Domain\bin\Debug\net6.0\Library.Domain.dll
+A:\projects\Library\Library\Library.Domain\bin\Debug\net6.0\ref\Library.Domain.dll
+A:\projects\Library\Library\Library.Domain\bin\Debug\net6.0\Library.Domain.pdb
+A:\projects\Library\Library\Library.Domain\bin\Debug\net6.0\Library.SharedKernel.dll
+A:\projects\Library\Library\Library.Domain\bin\Debug\net6.0\Library.SharedKernel.pdb
+A:\projects\Library\Library\Library.Domain\obj\Debug\net6.0\Library.Domain.csproj.AssemblyReference.cache
+A:\projects\Library\Library\Library.Domain\obj\Debug\net6.0\Library.Domain.GeneratedMSBuildEditorConfig.editorconfig
+A:\projects\Library\Library\Library.Domain\obj\Debug\net6.0\Library.Domain.AssemblyInfoInputs.cache
+A:\projects\Library\Library\Library.Domain\obj\Debug\net6.0\Library.Domain.AssemblyInfo.cs
+A:\projects\Library\Library\Library.Domain\obj\Debug\net6.0\Library.Domain.csproj.CoreCompileInputs.cache
+A:\projects\Library\Library\Library.Domain\obj\Debug\net6.0\Library.Domain.csproj.CopyComplete
+A:\projects\Library\Library\Library.Domain\obj\Debug\net6.0\Library.Domain.dll
+A:\projects\Library\Library\Library.Domain\obj\Debug\net6.0\ref\Library.Domain.dll
+A:\projects\Library\Library\Library.Domain\obj\Debug\net6.0\Library.Domain.pdb

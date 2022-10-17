@@ -1,0 +1,14 @@
+@media screen and (max-width: 992px) {
+  .header-nav > a.route-buttons {
+    padding: 20px 0 !important;
+    border-top: 2px grey solid;
+  }
+
+  .header-nav > a.route-buttons:last-of-type {
+    border-bottom: 2px grey solid;
+  }
+
+  .header-nav .nav-text {
+    font-size: 20px;
+  }
+}

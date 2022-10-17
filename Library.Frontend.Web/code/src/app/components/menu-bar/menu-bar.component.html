@@ -1,0 +1,22 @@
+<clr-header>
+  <div class="branding">
+    <a routerLink="" class="nav-link">
+      <clr-icon shape="library" class="is-solid"></clr-icon>
+      <span class="title">Bibliotek</span>
+    </a>
+  </div>
+  <div class="header-nav" [clr-nav-level]="1">
+    <a
+      routerLink="/employee"
+      routerLinkActive="active"
+      class="nav-link route-buttons"
+      ><span class="nav-text">Anställda</span></a
+    >
+    <a
+    routerLink="/library"
+    routerLinkActive="active"
+    class="nav-link route-buttons"
+    ><span class="nav-text">Böcker</span></a
+  >
+  </div>
+</clr-header>

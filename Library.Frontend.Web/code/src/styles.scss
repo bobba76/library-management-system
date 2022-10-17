@@ -1,0 +1,22 @@
+/* You can add global styles to this file, and also import other style files */
+.feature-header > h3 {
+  margin-top: 0;
+}
+
+.content-header {
+  display: flex;
+  align-items: center;
+  border-bottom: #dedede 1px solid;
+}
+
+.content-header > library-back-button {
+  padding: 10px 0px 10px 30px;
+}
+
+.content-header > h2 {
+  margin: 0 0 0 10px !important;
+}
+
+.btn-group {
+
+}
