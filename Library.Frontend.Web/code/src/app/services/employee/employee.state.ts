@@ -41,7 +41,7 @@ export class EmployeeState {
   @Selector([EmployeeState])
   static getManagersAndCEO(state: EmployeeStateModel) {
     return state.employees.filter(
-      (e) => e.role === EmployeeRole.Manager || e.role === EmployeeRole.CEO
+      (e) => e.role === EmployeeRole.Manager || e.role === EmployeeRole.Ceo
     );
   }
 

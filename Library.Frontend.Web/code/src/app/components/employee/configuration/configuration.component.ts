@@ -13,7 +13,6 @@ import {
   UpdateEmployeeInputModel
 } from '@models/employee/employee.model';
 import { EmployeeActions } from '@services/employee/employee.action';
-import { EmployeeService } from '@services/employee/employee.service';
 import { EmployeeState } from '@services/employee/employee.state';
 import {
   ConfigurationMode,
@@ -55,7 +54,7 @@ export class EmployeeConfigurationComponent implements OnInit, OnDestroy {
         Validators.pattern('^[0-9]*$'),
       ],
     ],
-    role: [EmployeeRole.Employee],
+    role: [EmployeeRole.Employee, Validators.required,],
     managerId: [0],
   });
 
@@ -157,7 +156,7 @@ export class EmployeeConfigurationComponent implements OnInit, OnDestroy {
     );
 
     switch (this.employee.role) {
-      case EmployeeRole.CEO:
+      case EmployeeRole.Ceo:
         this.form.controls.managerId.disable();
         break;
     }
@@ -167,7 +166,7 @@ export class EmployeeConfigurationComponent implements OnInit, OnDestroy {
     this.submitBtnState = ClrLoadingState.LOADING;
 
     switch (this.form.controls.role.value) {
-      case EmployeeRole.CEO:
+      case EmployeeRole.Ceo:
         this.form.controls.managerId.setValue(null);
         break;
     }
@@ -233,7 +232,7 @@ export class EmployeeConfigurationComponent implements OnInit, OnDestroy {
   }
 
   roleCEOChosen(): boolean {
-    return this.form.controls.role.value === EmployeeRole.CEO;
+    return this.form.controls.role.value === EmployeeRole.Ceo;
   }
   // #endregion
 
@@ -245,7 +244,7 @@ export class EmployeeConfigurationComponent implements OnInit, OnDestroy {
   managerAndCEOFilter(employee: EmployeeModel) {
     return (
       employee.role === EmployeeRole.Manager ||
-      employee.role === EmployeeRole.CEO
+      employee.role === EmployeeRole.Ceo
     );
   }
   // #endregion
@@ -257,7 +256,7 @@ export class EmployeeConfigurationComponent implements OnInit, OnDestroy {
 
   switchedRole(role: EmployeeRole): void {
     switch (role) {
-      case EmployeeRole.CEO:
+      case EmployeeRole.Ceo:
         setTimeout(() => this.form.controls.managerId.disable());
         break;
 

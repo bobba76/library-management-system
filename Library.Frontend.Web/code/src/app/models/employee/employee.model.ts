@@ -21,21 +21,21 @@ class EmployeeModel implements Entity {
 enum EmployeeRole {
   Employee = 1,
   Manager = 2,
-  CEO = 3,
+  Ceo = 3,
 }
 
 // [GET NAME] => employeeRoleName.get(EmployeeRole.Employee)
 const employeeRoleName = new Map<EmployeeRole, string>([
   [EmployeeRole.Employee, 'Anställd'],
   [EmployeeRole.Manager, 'Manager'],
-  [EmployeeRole.CEO, 'CEO'],
+  [EmployeeRole.Ceo, 'CEO'],
 ]);
 
 // [GET SalaryCoefficient] => salaryCoefficient.get(EmployeeRole.Employee)
 const salaryCoefficient = new Map<EmployeeRole, number>([
   [EmployeeRole.Employee, 1.125],
   [EmployeeRole.Manager, 1.725],
-  [EmployeeRole.CEO, 2.725],
+  [EmployeeRole.Ceo, 2.725],
 ]);
 
 type CreateEmployeeInputModel = {
@@ -49,7 +49,7 @@ type CreateEmployeeInputModel = {
 type UpdateEmployeeInputModel = {
   firstName: string;
   lastName: string;
-  salaryInput?: number;
+  salaryInput: number;
   role: EmployeeRole;
   managerId?: number;
 };
