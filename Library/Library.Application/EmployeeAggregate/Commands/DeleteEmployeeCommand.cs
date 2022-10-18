@@ -5,5 +5,5 @@ namespace Library.Application.EmployeeAggregate.Commands;
 
 public class DeleteEmployeeCommand : ICommand<IEnumerable<EmployeeBase>>
 {
-    public Guid Id { get; set; }
+    public int Id { get; set; }
 }

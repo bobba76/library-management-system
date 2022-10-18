@@ -12,84 +12,64 @@ public class EmployeeBase : Entity
 
     public EmployeeRole Role { get; set; }
 
-    public string? ManagerId { get; set; }
+    public int? ManagerId { get; set; }
 
-    protected static void Create(EmployeeCreateParameters parameters)
+    protected static void Create(CreateEmployeeParameters parameters)
     {
         Create(
             parameters.FirstName,
             parameters.LastName,
-            parameters.SalaryInput,
-            parameters.Role,
-            parameters.ManagerId
+            parameters.Salary,
+            parameters.Role
         );
     }
 
     private static void Create(string firstName, string lastName,
-        int salaryInput, EmployeeRole role, string? managerId)
+        int salary, EmployeeRole role)
     {
-        if (firstName.Trim().Length is < 1 or > 255)
+        if (firstName.Trim().Length is < 1 or > 64)
             throw new ArgumentException(
-                $"Value must be between 1 - 255 characters. (Parameter '{nameof(firstName)}', Value '{firstName}')");
+                $"Value must be between 1 - 64 characters. (Parameter '{nameof(firstName)}', Value '{firstName}')");
 
-        if (lastName.Trim().Length is < 1 or > 255)
+        if (lastName.Trim().Length is < 1 or > 64)
             throw new ArgumentException(
-                $"Value must be between 1 - 255 characters. (Parameter '{nameof(lastName)}', Value '{lastName}')");
+                $"Value must be between 1 - 64 characters. (Parameter '{nameof(lastName)}', Value '{lastName}')");
 
-        if (salaryInput is < 1 or > 10)
+        if (salary is < 1 or > 10)
             throw new ArgumentException(
-                $"Value must be an int between 1 - 10. (Parameter '{nameof(salaryInput)}', Value '{salaryInput}')");
+                $"Value must be an int between 1 - 10. (Parameter '{nameof(salary)}', Value '{salary}')");
 
         if (!Enum.IsDefined(typeof(EmployeeRole), role))
             throw new ArgumentException(
                 $"Value must be typeof EmployeeRole. (Parameter '{nameof(role)}', Value '{role}')");
-        
-        if (!Guid.TryParse(managerId, out var managerGuid) && !string.IsNullOrWhiteSpace(managerId))
-            throw new ArgumentException(
-                $"Value must be typeof Guid OR null. (Parameter '{nameof(managerId)}', Value '{managerId}')");
-
-        if (managerGuid.Equals(Guid.Empty) && !string.IsNullOrWhiteSpace(managerId))
-            throw new ArgumentException(
-                $"Value cannot be equal to Guid Empty. (Parameter '{nameof(managerId)}', Value '{managerId}')");
     }
 
-    protected static void Update(EmployeeUpdateParameters parameters)
+    protected static void Update(UpdateEmployeeParameters parameters)
     {
         Update(
             parameters.FirstName,
             parameters.LastName,
-            parameters.SalaryInput,
-            parameters.Role,
-            parameters.ManagerId
+            parameters.Salary,
+            parameters.Role
         );
     }
 
-    // TODO: Checka vad som händer om man skickar in Employee med GUID 000-00000000000000-00000
-    private static void Update(string? firstName, string? lastName, int salaryInput, EmployeeRole role,
-        string? managerId)
+    private static void Update(string? firstName, string? lastName, int salary, EmployeeRole role)
     {
-        if (firstName?.Trim().Length is < 1 or > 255)
+        if (firstName?.Trim().Length is < 1 or > 64)
             throw new ArgumentException(
-                $"Value must be null or between 1 - 255 characters. (Parameter '{nameof(firstName)}', Value '{firstName}')");
+                $"Value must be between 1 - 64 characters OR null. (Parameter '{nameof(firstName)}', Value '{firstName}')");
 
-        if (lastName?.Trim().Length is < 1 or > 255)
+        if (lastName?.Trim().Length is < 1 or > 64)
             throw new ArgumentException(
-                $"Value must be null or between 1 - 255 characters. (Parameter '{nameof(lastName)}', Value '{lastName}')");
+                $"Value must be between 1 - 64 characters OR null. (Parameter '{nameof(lastName)}', Value '{lastName}')");
 
-        if (salaryInput is < 1 or > 10)
+        if (salary is < 1 or > 10)
             throw new ArgumentException(
-                $"Value must be an int between 1 - 10. (Parameter '{nameof(salaryInput)}', Value '{salaryInput}')");
+                $"Value must be an int between 1 - 10 OR null. (Parameter '{nameof(salary)}', Value '{salary}')");
 
         if (!Enum.IsDefined(typeof(EmployeeRole), role))
             throw new ArgumentException(
                 $"Value must be of EmployeeRole. (Parameter '{nameof(role)}', Value '{role}')");
-
-        if (!Guid.TryParse(managerId, out var managerGuid) && managerGuid.Equals(Guid.Empty)  && !string.IsNullOrWhiteSpace(managerId))
-            throw new ArgumentException(
-                $"Value must be null or a non-nullable Guid. (Parameter '{nameof(managerId)}', Value '{managerId} {managerGuid}')");
-
-        if (managerGuid.Equals(Guid.Empty) && !string.IsNullOrWhiteSpace(managerId))
-            throw new ArgumentException(
-                $"Value cannot be equal to Guid Empty. (Parameter '{nameof(managerId)}', Value '{managerId}')");
     }
 }

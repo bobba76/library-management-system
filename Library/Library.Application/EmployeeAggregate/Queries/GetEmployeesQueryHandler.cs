@@ -30,7 +30,7 @@ public class GetEmployeesQueryHandler : IRequestHandler<GetEmployeesQuery, IEnum
                 orderBy = o => GetPropValue(o, property.Name).ToString();
         }
 
-        return await _employeeRepository.GetAsync(cancellationToken, filter, orderBy);
+        return await _employeeRepository.GetAsync(cancellationToken, filter, orderBy, request.OrderByDesc);
     }
 
     public static object GetPropValue(object src, string propName)

@@ -20,8 +20,8 @@ public class DeleteEmployeeCommandHandler : IRequestHandler<DeleteEmployeeComman
         var employees = await _employeeRepository.GetAsync(cancellationToken);
 
         var managerToAnybody = employees.Count(e =>
-            e.ManagerId != null &&
-            e.ManagerId.Equals(request.Id.ToString()));
+            e.ManagerId.GetValueOrDefault(0) != 0 &&
+            e.ManagerId.Equals(request.Id));
 
         if (managerToAnybody > 0)
             throw new ArgumentException(

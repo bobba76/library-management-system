@@ -13,7 +13,7 @@ public class SQLController : ApiController
         return DB.UpdateConnectionString(connectionString);
     }
 
-    [HttpGet]
+    [HttpPost]
     [Route("setup")]
     [Produces("application/json")]
     public string Setup()

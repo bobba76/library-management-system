@@ -2,5 +2,5 @@
 
 public abstract class IdentityUpdateCommand
 {
-    public Guid Id { get; set; } = Guid.Empty;
+    public int Id { get; set; }
 }

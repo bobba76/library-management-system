@@ -2,24 +2,24 @@
 
 public class Employee : EmployeeBase
 {
-    public new static float SalaryCoefficient => 1.125F;
+    public static float SalaryCoefficient => 1.125F;
 
-    public new static Employee Create(EmployeeCreateParameters parameters)
+    public new static Employee Create(CreateEmployeeParameters parameters)
     {
         EmployeeBase.Create(parameters);
 
         return Create(
             parameters.FirstName,
             parameters.LastName,
-            parameters.SalaryInput,
+            parameters.Salary,
             parameters.ManagerId
         );
     }
 
     private static Employee Create(string firstName, string lastName,
-        int salaryInput, string? managerId)
+        int salary, int? managerId)
     {
-        if (string.IsNullOrWhiteSpace(managerId))
+        if (managerId.GetValueOrDefault(0) == 0)
             throw new ArgumentException(
                 $"Value cannot be null. {EmployeeRole.Employee} must have a {EmployeeRole.Manager}. (Parameter '{nameof(managerId)}')");
 
@@ -27,7 +27,7 @@ public class Employee : EmployeeBase
         {
             FirstName = firstName,
             LastName = lastName,
-            Salary = salaryInput * (decimal) SalaryCoefficient,
+            Salary = salary * (decimal) SalaryCoefficient,
             Role = EmployeeRole.Employee,
             ManagerId = managerId
         };
@@ -35,7 +35,7 @@ public class Employee : EmployeeBase
         return employee;
     }
 
-    public new static Employee Update(EmployeeUpdateParameters parameters)
+    public new static Employee Update(UpdateEmployeeParameters parameters)
     {
         EmployeeBase.Update(parameters);
 
@@ -43,21 +43,21 @@ public class Employee : EmployeeBase
             parameters.Id,
             parameters.FirstName,
             parameters.LastName,
-            parameters.SalaryInput,
+            parameters.Salary,
             parameters.ManagerId
         );
     }
 
-    private static Employee Update(Guid id, string? firstName, string? lastName, int salaryInput, string? managerId)
+    private static Employee Update(int id, string? firstName, string? lastName, int salary, int? managerId)
     {
-        if (string.IsNullOrWhiteSpace(managerId))
+        if (managerId.GetValueOrDefault(0) == 0)
             throw new ArgumentException(
                 $"Value cannot be null. {EmployeeRole.Employee} must have a {EmployeeRole.Manager}. (Parameter '{nameof(managerId)}')");
 
         Employee employee = new()
         {
             Id = id,
-            Salary = salaryInput * (decimal) SalaryCoefficient,
+            Salary = salary * (decimal) SalaryCoefficient,
             Role = EmployeeRole.Employee,
             ManagerId = managerId
         };

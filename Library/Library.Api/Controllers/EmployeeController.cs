@@ -30,9 +30,9 @@ public class EmployeeController : ApiController
     [HttpGet]
     [Route("{id}")]
     [Produces("application/json")]
-    public async Task<EmployeeVm> GetEmployeeById(Guid id)
+    public async Task<EmployeeVm> GetEmployeeById(int id)
     {
-        var employee = await _mediator.Send(new GetEmployeeQuery() { Id = id });
+        var employee = await _mediator.Send(new GetEmployeeQuery {Id = id});
 
         return _mapper.Map<EmployeeVm>(employee);
     }
@@ -51,7 +51,7 @@ public class EmployeeController : ApiController
     [HttpPut]
     [Route("{id}")]
     [Produces("application/json")]
-    public async Task<EmployeeVm> PutEmployee(Guid id, [FromBody] UpdateEmployeeInputModel inputModel)
+    public async Task<EmployeeVm> PutEmployee(int id, [FromBody] UpdateEmployeeInputModel inputModel)
     {
         var command = _mapper.Map<UpdateEmployeeCommand>(inputModel);
         command.Id = id;
@@ -64,9 +64,9 @@ public class EmployeeController : ApiController
     [HttpDelete]
     [Route("{id}")]
     [Produces("application/json")]
-    public async Task<IEnumerable<EmployeeVm>> DeleteEmployee(Guid id)
+    public async Task<IEnumerable<EmployeeVm>> DeleteEmployee(int id)
     {
-        var employees = await _mediator.Send(new DeleteEmployeeCommand() { Id = id });
+        var employees = await _mediator.Send(new DeleteEmployeeCommand {Id = id});
 
         return _mapper.Map<IEnumerable<EmployeeVm>>(employees);
     }

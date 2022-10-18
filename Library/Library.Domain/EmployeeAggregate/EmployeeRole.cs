@@ -8,5 +8,5 @@ public enum EmployeeRole
 
     [Description("Manager")] Manager = 2,
 
-    [Description("CEO")] CEO = 3
+    [Description("CEO")] Ceo = 3
 }

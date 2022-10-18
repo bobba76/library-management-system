@@ -5,5 +5,5 @@ namespace Library.Application.EmployeeAggregate.Queries;
 
 public class GetEmployeeQuery : IQuery<EmployeeBase>
 {
-    public Guid Id { get; set; }
+    public int Id { get; set; }
 }

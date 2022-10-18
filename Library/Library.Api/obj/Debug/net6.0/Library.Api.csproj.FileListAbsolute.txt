@@ -78,3 +78,4 @@ A:\projects\Library\Library\Library.Api\obj\Debug\net6.0\staticwebassets.develop
 A:\projects\Library\Library\Library.Api\obj\Debug\net6.0\scopedcss\bundle\Library.Api.styles.css
 A:\projects\Library\Library\Library.Api\obj\Debug\net6.0\Library.Api.csproj.CopyComplete
 A:\projects\Library\Library\Library.Api\obj\Debug\net6.0\Library.Api.genruntimeconfig.cache
+A:\projects\Library\Library\Library.Api\obj\Debug\net6.0\Library.Api.MvcApplicationPartsAssemblyInfo.cs

@@ -1,40 +1,40 @@
 ﻿namespace Library.Domain.EmployeeAggregate.Roles;
 
-public class CEO : EmployeeBase
+public class Ceo : EmployeeBase
 {
-    public new static float SalaryCoefficient => 2.725F;
+    public static float SalaryCoefficient => 2.725F;
 
-    public new static CEO Create(EmployeeCreateParameters parameters)
+    public new static Ceo Create(CreateEmployeeParameters parameters)
     {
         EmployeeBase.Create(parameters);
 
         return Create(
             parameters.FirstName,
             parameters.LastName,
-            parameters.SalaryInput,
+            parameters.Salary,
             parameters.ManagerId
         );
     }
 
-    private static CEO Create(string firstName, string lastName,
-        int salaryInput, string? managerId)
+    private static Ceo Create(string firstName, string lastName,
+        int salary, int? managerId)
     {
-        if (managerId is not null)
+        if (managerId.GetValueOrDefault(0) != 0)
             throw new ArgumentException(
-                $"Value must be null. {EmployeeRole.CEO} cannot have a {EmployeeRole.Manager}. (Parameter '{nameof(managerId)}, Value '{managerId}'')");
+                $"Value must be null. {EmployeeRole.Ceo} cannot have a {EmployeeRole.Manager}. (Parameter '{nameof(managerId)}, Value '{managerId}'')");
 
-        CEO employee = new()
+        Ceo employee = new()
         {
             FirstName = firstName,
             LastName = lastName,
-            Salary = salaryInput * (decimal) SalaryCoefficient,
-            Role = EmployeeRole.CEO
+            Salary = salary * (decimal) SalaryCoefficient,
+            Role = EmployeeRole.Ceo
         };
 
         return employee;
     }
 
-    public new static CEO Update(EmployeeUpdateParameters parameters)
+    public new static Ceo Update(UpdateEmployeeParameters parameters)
     {
         EmployeeBase.Update(parameters);
 
@@ -42,22 +42,22 @@ public class CEO : EmployeeBase
             parameters.Id,
             parameters.FirstName,
             parameters.LastName,
-            parameters.SalaryInput,
+            parameters.Salary,
             parameters.ManagerId
         );
     }
 
-    private static CEO Update(Guid id, string? firstName, string? lastName, int salaryInput, string? managerId)
+    private static Ceo Update(int id, string? firstName, string? lastName, int salary, int? managerId)
     {
-        if (managerId is not null)
+        if (managerId.GetValueOrDefault(0) != 0)
             throw new ArgumentException(
-                $"Value must be null. {EmployeeRole.CEO} cannot have a {EmployeeRole.Manager}. (Parameter '{nameof(managerId)}', Value '{managerId}')");
+                $"Value must be null. {EmployeeRole.Ceo} cannot have a {EmployeeRole.Manager}. (Parameter '{nameof(managerId)}', Value '{managerId}')");
 
-        CEO employee = new()
+        Ceo employee = new()
         {
             Id = id,
-            Salary = salaryInput * (decimal) SalaryCoefficient,
-            Role = EmployeeRole.CEO
+            Salary = salary * (decimal) SalaryCoefficient,
+            Role = EmployeeRole.Ceo
         };
 
         if (firstName is not null)

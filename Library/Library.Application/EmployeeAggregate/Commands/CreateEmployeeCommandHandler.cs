@@ -23,55 +23,52 @@ public class CreateEmployeeCommandHandler : IRequestHandler<CreateEmployeeComman
 
         switch (request.Role)
         {
-            case EmployeeRole.CEO:
+            case EmployeeRole.Ceo:
             {
-                var ceoExists = employees.Any(e => e.Role.Equals(EmployeeRole.CEO));
+                var ceoExists = employees.Any(e => e.Role.Equals(EmployeeRole.Ceo));
 
                 if (ceoExists)
                     throw new ArgumentException(
-                        $"Employee cannot have role {EmployeeRole.CEO}. A {EmployeeRole.CEO} already exists. (Parameter '{nameof(request.Role)}, Value '{request.Role}')");
+                        $"Employee cannot have role {EmployeeRole.Ceo}. A {EmployeeRole.Ceo} already exists. (Parameter '{nameof(request.Role)}, Value '{request.Role}')");
                 break;
             }
 
             case EmployeeRole.Employee:
-            default:
             {
                 var mangerIsCeo = employees.Any(e =>
-                    e.Role.Equals(EmployeeRole.CEO) &&
-                    !string.IsNullOrWhiteSpace(request.ManagerId) &&
-                    e.Id.ToString().Equals(request.ManagerId));
+                    e.Role.Equals(EmployeeRole.Ceo) &&
+                    request.ManagerId.GetValueOrDefault(0) == 0 &&
+                    e.Id.Equals(request.ManagerId));
 
                 if (mangerIsCeo)
                     throw new ArgumentException(
-                        $"Employee cannot have {EmployeeRole.CEO} as Manager. Only employees with role {EmployeeRole.Manager} can. (Parameter '{nameof(request.Role)}, Value '{request.Role}')");
+                        $"Employee cannot have {EmployeeRole.Ceo} as Manager. Only employees with role {EmployeeRole.Manager} can. (Parameter '{nameof(request.Role)}, Value '{request.Role}')");
                 break;
             }
         }
 
         var managerIsEmployee = employees.Any(e =>
             e.Role.Equals(EmployeeRole.Employee) &&
-            !string.IsNullOrWhiteSpace(request.ManagerId) &&
-            e.Id.ToString().Equals(request.ManagerId));
+            request.ManagerId.GetValueOrDefault(0) == 0 &&
+            e.Id.Equals(request.ManagerId));
 
         if (managerIsEmployee)
             throw new ArgumentException(
                 $"Employee cannot have {EmployeeRole.Employee} as Manager. An employee with role {EmployeeRole.Employee} cannot manage other employees. (Parameter '{nameof(request.ManagerId)}, Value '{request.ManagerId}')");
 
-        var employee = CreateEmployeeBasedOfRole(request);
+        var employee = CreateEmployeeBasedOfRole(_mapper.Map<CreateEmployeeParameters>(request));
 
         await _employeeRepository.CreateAsync(employee, cancellationToken);
 
         return await _employeeRepository.GetAsync(cancellationToken);
     }
 
-    private EmployeeBase CreateEmployeeBasedOfRole(CreateEmployeeCommand request)
+    private EmployeeBase CreateEmployeeBasedOfRole(CreateEmployeeParameters employee)
     {
-        var employee = _mapper.Map<EmployeeCreateParameters>(request);
-
         switch (employee.Role)
         {
-            case EmployeeRole.CEO:
-                return CEO.Create(employee);
+            case EmployeeRole.Ceo:
+                return Ceo.Create(employee);
 
             case EmployeeRole.Manager:
                 return Manager.Create(employee);
