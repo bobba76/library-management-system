@@ -15,7 +15,6 @@ export interface EmployeeStateModel {
   employees: Array<EmployeeModel>;
 }
 
-// TODO: Kolla om man kan ta bort defaults
 @State<EmployeeStateModel>({
   name: 'employees',
   defaults: {

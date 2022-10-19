@@ -2,7 +2,7 @@
   <div class="branding">
     <a routerLink="" class="nav-link">
       <clr-icon shape="library" class="is-solid"></clr-icon>
-      <span class="title">Bibliotek</span>
+      <span class="title">Stadsbiblioteket</span>
     </a>
   </div>
   <div class="header-nav" [clr-nav-level]="1">
@@ -12,11 +12,21 @@
       class="nav-link route-buttons"
       ><span class="nav-text">Anställda</span></a
     >
-    <a
-    routerLink="/library"
-    routerLinkActive="active"
-    class="nav-link route-buttons"
-    ><span class="nav-text">Böcker</span></a
-  >
+  </div>
+  <div class="header-actions">
+    <clr-dropdown>
+      <button
+        class="nav-icon"
+        clrDropdownTrigger
+        aria-label="toggle settings menu"
+      >
+        <clr-icon shape="cog"></clr-icon>
+        <clr-icon shape="angle down"></clr-icon>
+      </button>
+      <clr-dropdown-menu *clrIfOpen clrPosition="bottom-right">
+        <a (click)="resetData()" clrDropdownItem>Återställ data</a>
+        <a (click)="deleteAllData()" clrDropdownItem>Rensa data</a>
+      </clr-dropdown-menu>
+    </clr-dropdown>
   </div>
 </clr-header>

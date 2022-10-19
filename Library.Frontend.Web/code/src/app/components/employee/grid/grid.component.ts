@@ -11,7 +11,6 @@ import {
   employeeRoleName
 } from '@models/employee/employee.model';
 import { EmployeeActions } from '@services/employee/employee.action';
-import { EmployeeService } from '@services/employee/employee.service';
 import { EmployeeState } from '@services/employee/employee.state';
 
 @Component({

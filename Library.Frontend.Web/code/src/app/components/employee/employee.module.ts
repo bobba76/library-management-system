@@ -10,11 +10,11 @@ import { EmployeeGridComponent } from '@components/employee/grid/grid.component'
 
 const routes: Routes = [
   {
-    path: 'employee',
+    path: '',
     component: EmployeeComponent,
   },
   {
-    path: 'employee/:id',
+    path: ':id',
     component: EmployeeConfigurationComponent,
   }
 ];

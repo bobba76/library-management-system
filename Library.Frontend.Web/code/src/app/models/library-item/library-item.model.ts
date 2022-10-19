@@ -58,7 +58,7 @@ type UpdateLibraryItemInputModel = {
   runTimeMinutes?: number;
   borrower?: string;
   borrowDate?: string;
-  type: LibraryItemType;
+  type?: LibraryItemType;
 };
 
 export {

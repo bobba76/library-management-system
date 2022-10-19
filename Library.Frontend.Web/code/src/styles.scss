@@ -17,6 +17,11 @@
   margin: 0 0 0 10px !important;
 }
 
+.required:after {
+  content:" *";
+  color: red;
+}
+
 /* Clarity Data Grid */
 .datagrid-fixed-width {
   flex: 0 0 auto;
@@ -84,4 +89,11 @@
 .width-fix-15 {
   width: 15rem;
   max-width: 15rem;
+}
+.center-text-h {
+  text-align: center !important;
+}
+.center-text-v {
+  display: flex;
+  align-items: center !important;
 }

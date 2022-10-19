@@ -1,0 +1,104 @@
+<form class="clr-form">
+  <clr-input-container style="margin-top: 0; position: relative">
+    <label for="borrower" required class="required" style="padding: 0"
+      >Lånarens namn</label
+    >
+    <input
+      name="borrower"
+      id="borrower"
+      [(ngModel)]="borrower"
+      required
+      clrInput
+      type="text"
+      style="padding: 0"
+    />
+    <clr-control-error *clrIfError="'required'" style="position: absolute">
+      Detta fält är obligatoriskt.
+    </clr-control-error>
+  </clr-input-container>
+</form>
+
+<button
+  type="button"
+  class="btn btn-sm"
+  (click)="borrowSelectedLibraryItems()"
+  [disabled]="selected.length === 0 || borrower === ''"
+  style="margin: 25px 0 0 0"
+>
+  <clr-icon shape="book"></clr-icon> Låna
+</button>
+
+<clr-datagrid [(clrDgSelected)]="selected" [clrDgRowSelection]="true">
+  <clr-dg-column [clrDgField]="'title'">Titel</clr-dg-column>
+  <clr-dg-column [clrDgField]="'categoryId'">Kategori</clr-dg-column>
+  <clr-dg-column [clrDgField]="'type'">Typ</clr-dg-column>
+  <clr-dg-column [clrDgField]="'author'">
+    <ng-container *clrDgHideableColumn="{ hidden: false }">
+      Författare
+    </ng-container>
+  </clr-dg-column>
+  <clr-dg-column [clrDgField]="'pages'">
+    <ng-container *clrDgHideableColumn="{ hidden: false }">
+      Sidor
+    </ng-container>
+  </clr-dg-column>
+  <clr-dg-column [clrDgField]="'runTimeMinutes'">
+    <ng-container *clrDgHideableColumn="{ hidden: false }">
+      Minuter
+    </ng-container>
+  </clr-dg-column>
+  <clr-dg-column [clrDgField]="'borrower'">
+    <ng-container *clrDgHideableColumn="{ hidden: false }">
+      Lånare
+    </ng-container>
+  </clr-dg-column>
+  <clr-dg-column [clrDgField]="'borrowDate'">
+    <ng-container *clrDgHideableColumn="{ hidden: false }">
+      Lånedatum
+    </ng-container>
+  </clr-dg-column>
+  <clr-dg-column
+    [clrDgField]="'isBorrowable'"
+    class="datagrid-fixed-width width-fix-4"
+    >Lånbar</clr-dg-column
+  >
+
+  <clr-dg-row
+    [clrDgItem]="libraryItem"
+    [clrDgSelectable]="
+      libraryItem.isBorrowable && libraryItem.borrower === null
+    "
+    *clrDgItems="let libraryItem of libraryItems$ | async"
+  >
+    <clr-dg-cell>{{ libraryItem.title }}</clr-dg-cell>
+    <clr-dg-cell>{{ getCategoryName(libraryItem.categoryId) }}</clr-dg-cell>
+    <clr-dg-cell>{{ getLibraryItemTypeName(libraryItem.type) }}</clr-dg-cell>
+    <clr-dg-cell>{{ libraryItem.author }}</clr-dg-cell>
+    <clr-dg-cell>{{
+      libraryItem.pages > 0 ? libraryItem.pages : null
+    }}</clr-dg-cell>
+    <clr-dg-cell>{{
+      libraryItem.runTimeMinutes > 0 ? libraryItem.runTimeMinutes : null
+    }}</clr-dg-cell>
+    <clr-dg-cell>{{ libraryItem.borrower }}</clr-dg-cell>
+    <clr-dg-cell>{{ libraryItem.borrowDate | date: "yyyy-MM-dd" }}</clr-dg-cell>
+
+    <clr-dg-cell class="datagrid-fixed-width width-fix-4 center-text-h">
+      <clr-icon
+        shape="check"
+        style="color: green"
+        *ngIf="libraryItem.isBorrowable"
+      ></clr-icon>
+    </clr-dg-cell>
+  </clr-dg-row>
+
+  <clr-dg-footer>
+    <clr-dg-pagination #pagination [clrDgPageSize]="10">
+      <clr-dg-page-size [clrPageSizeOptions]="[10, 20, 50, 100]"
+        >Biblioteksobjekt per sida</clr-dg-page-size
+      >
+      {{ pagination.firstItem + 1 }} - {{ pagination.lastItem + 1 }} av
+      {{ pagination.totalItems }} biblioteksobjekt
+    </clr-dg-pagination>
+  </clr-dg-footer>
+</clr-datagrid>

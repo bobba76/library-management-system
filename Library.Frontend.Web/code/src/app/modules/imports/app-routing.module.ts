@@ -1,21 +1,17 @@
 import { RouterModule, Routes } from '@angular/router';
 
+// Lazy loading modules
 const routes: Routes = [
+  { path: '', redirectTo: '/library', pathMatch: 'full' },
   {
-    path: '',
-    pathMatch: 'full',
+    path: 'library',
     loadChildren: () =>
-      import('../../components/home/home.module').then((m) => m.HomeModule),
+      import('../../components/library/library.module').then(
+        (m) => m.LibraryModule
+      ),
   },
-  // {
-  //   path: '',
-  //   loadChildren: () =>
-  //     import('./components/library/library.module').then(
-  //       (m) => m.LibraryModule
-  //     ),
-  // },
   {
-    path: '',
+    path: 'employee',
     loadChildren: () =>
       import('../../components/employee/employee.module').then(
         (m) => m.EmployeeModule
