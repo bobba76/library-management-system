@@ -39,10 +39,11 @@ public class CategoryRepository : SQLRepository<Category>, ICategoryRepository
             categories.Add(category);
         }
 
+        /*
         if (!reader.HasRows)
             throw new ArgumentException(
                 $"No rows in table 'categories'. (Command: '{nameof(GetAsync)}')");
-
+        */
 
         if (filter is not null && orderBy is not null && orderByDesc is not null)
             return categories.AsQueryable().Where(filter).OrderByDescending(orderBy);
@@ -62,7 +63,7 @@ public class CategoryRepository : SQLRepository<Category>, ICategoryRepository
     {
         var category = new Category();
 
-        const string commandText = "SELECT * FROM employees WHERE id = @id";
+        const string commandText = "SELECT * FROM categories WHERE id = @id";
 
         await using var connection = new SqlConnection(_connectionString);
         await connection.OpenAsync(cancellationToken);
@@ -77,9 +78,11 @@ public class CategoryRepository : SQLRepository<Category>, ICategoryRepository
             category.CategoryName = reader.GetString(CategoryNameIndex);
         }
 
+        /* 
         if (!reader.HasRows)
             throw new ArgumentException(
                 $"There was no match in database. (Command: '{nameof(GetByIdAsync)}', Parameter '{nameof(id)}', Value '{id}')");
+        */
 
         return category;
     }

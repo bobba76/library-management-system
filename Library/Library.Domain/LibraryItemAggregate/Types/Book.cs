@@ -46,11 +46,14 @@ public class Book : LibraryItem
             parameters.CategoryId,
             parameters.Title,
             parameters.Author,
-            parameters.Pages
+            parameters.Pages,
+            parameters.BorrowDate,
+            parameters.Borrower
         );
     }
 
-    private static Book Update(int id, int? categoryId, string? title, string? author, int? pages)
+    private static Book Update(int id, int? categoryId, string? title, string? author, int? pages, DateTime? borrowDate,
+        string? borrower)
     {
         Book libraryItem = new()
         {
@@ -70,6 +73,12 @@ public class Book : LibraryItem
 
         if (pages is not null)
             libraryItem.Pages = pages;
+
+        if (borrowDate is not null)
+            libraryItem.BorrowDate = borrowDate;
+
+        if (borrower is not null)
+            libraryItem.Borrower = borrower;
 
         return libraryItem;
     }

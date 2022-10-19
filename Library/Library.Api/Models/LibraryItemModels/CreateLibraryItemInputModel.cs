@@ -11,6 +11,6 @@ public class CreateLibraryItemInputModel
     public int RunTimeMinutes { get; set; }
     public bool IsBorrowable { get; set; }
     public string Borrower { get; set; }
-    public DateOnly BorrowDate { get; set; }
+    public string BorrowDate { get; set; }
     public LibraryItemType Type { get; set; }
 }

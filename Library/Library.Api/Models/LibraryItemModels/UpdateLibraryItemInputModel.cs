@@ -11,6 +11,6 @@ public class UpdateLibraryItemInputModel
     public int? RunTimeMinutes { get; set; }
     public bool? IsBorrowable { get; set; }
     public string? Borrower { get; set; }
-    public DateOnly? BorrowDate { get; set; }
+    public DateTime? BorrowDate { get; set; }
     public LibraryItemType? Type { get; set; }
 }

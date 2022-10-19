@@ -18,7 +18,7 @@ public class LibraryItem : Entity
 
     public string? Borrower { get; set; }
 
-    public DateOnly? BorrowDate { get; set; }
+    public DateTime? BorrowDate { get; set; }
 
     public LibraryItemType Type { get; set; }
 
@@ -38,7 +38,7 @@ public class LibraryItem : Entity
 
         if (!Enum.IsDefined(typeof(LibraryItemType), type))
             throw new ArgumentException(
-                $"Value must be typeof LibraryItemType. (Parameter '{nameof(type)}', Value '{type}')");
+                $"Value must be typeof {typeof(LibraryItemType)}. (Parameter '{nameof(type)}', Value '{type}')");
     }
 
     protected static void Update(UpdateLibraryItemParameters parameters)
@@ -57,6 +57,6 @@ public class LibraryItem : Entity
 
         if (!Enum.IsDefined(typeof(LibraryItemType), type))
             throw new ArgumentException(
-                $"Value must be typeof LibraryItemType. (Parameter '{nameof(type)}', Value '{type}')");
+                $"Value must be typeof {typeof(LibraryItemType)}. (Parameter '{nameof(type)}', Value '{type}')");
     }
 }

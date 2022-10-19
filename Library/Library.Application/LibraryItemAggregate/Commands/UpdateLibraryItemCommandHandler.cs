@@ -39,6 +39,15 @@ public class UpdateLibraryItemCommandHandler : IRequestHandler<UpdateLibraryItem
             throw new ArgumentException(
                 $"To borrow a book, both {nameof(request.Borrower)} and {nameof(request.BorrowDate)} must have a value. (Parameter '{nameof(request.Borrower)}, Value '{request.Borrower}', Parameter '{nameof(request.BorrowDate)}, Value '{request.BorrowDate}')");
 
+        if (request.Type is null)
+        {
+            var oldLibraryItem = await _libraryItemRepository.GetByIdAsync(request.Id, cancellationToken);
+
+            // Keeping Type if null
+            request.Type ??= oldLibraryItem.Type;
+        }
+
+
         var libraryItem = UpdateLibraryItemBasedOfType(_mapper.Map<UpdateLibraryItemParameters>(request));
 
         await _libraryItemRepository.UpdateAsync(libraryItem, cancellationToken);

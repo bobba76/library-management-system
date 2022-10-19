@@ -47,10 +47,11 @@ public class EmployeeRepository : SQLRepository<EmployeeBase>, IEmployeeReposito
             employees.Add(employee);
         }
 
+        /*
         if (!reader.HasRows)
             throw new ArgumentException(
                 $"There was no match in database. (Command: '{nameof(GetAsync)}')");
-
+        */
 
         if (filter is not null && orderBy is not null && orderByDesc is not null)
             return employees.AsQueryable().Where(filter).OrderByDescending(orderBy);
@@ -89,9 +90,11 @@ public class EmployeeRepository : SQLRepository<EmployeeBase>, IEmployeeReposito
             employee.ManagerId = reader.IsDBNull(ManagerIdIndex) ? null : reader.GetInt32(ManagerIdIndex);
         }
 
+        /*
         if (!reader.HasRows)
             throw new ArgumentException(
                 $"There was no match in database. (Command: '{nameof(GetByIdAsync)}', Parameter '{nameof(id)}', Value '{id}')");
+        */
 
         return employee;
     }
@@ -137,9 +140,9 @@ public class EmployeeRepository : SQLRepository<EmployeeBase>, IEmployeeReposito
         await using var cmd = new SqlCommand(commandText, connection);
         cmd.Parameters.Add(new SqlParameter("@id", SqlDbType.Int)).Value = entity.Id;
         cmd.Parameters.Add(new SqlParameter("@firstName", SqlDbType.NVarChar)).Value =
-            entity.FirstName == null ? DBNull.Value : entity.FirstName;
+            entity.FirstName is null ? DBNull.Value : entity.FirstName;
         cmd.Parameters.Add(new SqlParameter("@lastName", SqlDbType.NVarChar)).Value =
-            entity.LastName == null ? DBNull.Value : entity.LastName;
+            entity.LastName is null ? DBNull.Value : entity.LastName;
         cmd.Parameters.Add(new SqlParameter("@salary", SqlDbType.Decimal)).Value = entity.Salary;
         cmd.Parameters.Add(new SqlParameter("@role", SqlDbType.Int)).Value = (int) entity.Role;
         cmd.Parameters.Add(new SqlParameter("@managerId", SqlDbType.Int)).Value =

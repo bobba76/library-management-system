@@ -43,24 +43,33 @@ public class LibraryItemRepository : SQLRepository<LibraryItem>, ILibraryItemRep
                 Id = reader.GetInt32(IdIndex),
                 CategoryId = reader.GetInt32(CategoryIdIndex),
                 Title = reader.GetString(TitleIndex),
-                Author = reader.GetString(AuthorIndex),
-                Pages = reader.GetInt32(PagesIndex),
-                RunTimeMinutes = reader.GetInt32(RunTimeMinutesIndex),
+                Author = reader.IsDBNull(AuthorIndex)
+                    ? null
+                    : reader.GetString(AuthorIndex),
+                Pages = reader.IsDBNull(PagesIndex)
+                    ? null
+                    : reader.GetInt32(PagesIndex),
+                RunTimeMinutes = reader.IsDBNull(RunTimeMinutesIndex)
+                    ? null
+                    : reader.GetInt32(RunTimeMinutesIndex),
                 IsBorrowable = reader.GetBoolean(IsBorrowableIndex),
-                Borrower = reader.GetString(BorrowerIndex),
+                Borrower = reader.IsDBNull(BorrowerIndex)
+                    ? null
+                    : reader.GetString(BorrowerIndex),
                 BorrowDate = reader.IsDBNull(BorrowDateIndex)
                     ? null
-                    : DateOnly.FromDateTime(reader.GetDateTime(BorrowDateIndex)),
+                    : reader.GetDateTime(BorrowDateIndex),
                 Type = reader.GetFieldValue<LibraryItemType>(TypeIndex)
             };
 
             libraryItems.Add(libraryItem);
         }
 
+        /*
         if (!reader.HasRows)
             throw new ArgumentException(
                 $"There was no match in database. (Command: '{nameof(GetAsync)}')");
-
+        */
 
         if (filter is not null && orderBy is not null && orderByDesc is not null)
             return libraryItems.AsQueryable().Where(filter).OrderByDescending(orderBy);
@@ -95,20 +104,30 @@ public class LibraryItemRepository : SQLRepository<LibraryItem>, ILibraryItemRep
             libraryItem.Id = reader.GetInt32(IdIndex);
             libraryItem.CategoryId = reader.GetInt32(CategoryIdIndex);
             libraryItem.Title = reader.GetString(TitleIndex);
-            libraryItem.Author = reader.GetString(AuthorIndex);
-            libraryItem.Pages = reader.GetInt32(PagesIndex);
-            libraryItem.RunTimeMinutes = reader.GetInt32(RunTimeMinutesIndex);
+            libraryItem.Author = reader.IsDBNull(AuthorIndex)
+                ? null
+                : reader.GetString(AuthorIndex);
+            libraryItem.Pages = reader.IsDBNull(PagesIndex)
+                ? null
+                : reader.GetInt32(PagesIndex);
+            libraryItem.RunTimeMinutes = reader.IsDBNull(RunTimeMinutesIndex)
+                ? null
+                : reader.GetInt32(RunTimeMinutesIndex);
             libraryItem.IsBorrowable = reader.GetBoolean(IsBorrowableIndex);
-            libraryItem.Borrower = reader.GetString(BorrowerIndex);
+            libraryItem.Borrower = reader.IsDBNull(BorrowDateIndex)
+                ? null
+                : reader.GetString(BorrowerIndex);
             libraryItem.BorrowDate = reader.IsDBNull(BorrowDateIndex)
                 ? null
-                : DateOnly.FromDateTime(reader.GetDateTime(BorrowDateIndex));
+                : reader.GetDateTime(BorrowDateIndex);
             libraryItem.Type = reader.GetFieldValue<LibraryItemType>(TypeIndex);
         }
 
+        /*
         if (!reader.HasRows)
             throw new ArgumentException(
                 $"There was no match in database. (Command: '{nameof(GetByIdAsync)}', Parameter '{nameof(id)}', Value '{id}')");
+        */
 
         return libraryItem;
     }
@@ -161,16 +180,21 @@ public class LibraryItemRepository : SQLRepository<LibraryItem>, ILibraryItemRep
 
         await using var cmd = new SqlCommand(commandText, connection);
         cmd.Parameters.Add(new SqlParameter("@id", SqlDbType.Int)).Value = entity.Id;
-        cmd.Parameters.Add(new SqlParameter("@categoryId", SqlDbType.NVarChar)).Value = entity.CategoryId;
-        cmd.Parameters.Add(new SqlParameter("@title", SqlDbType.NVarChar)).Value = entity.Title;
-        cmd.Parameters.Add(new SqlParameter("@author", SqlDbType.NVarChar)).Value = entity.Author;
+        cmd.Parameters.Add(new SqlParameter("@categoryId", SqlDbType.NVarChar)).Value =
+            entity.CategoryId.GetValueOrDefault(0) == 0 ? DBNull.Value : entity.CategoryId;
+        cmd.Parameters.Add(new SqlParameter("@title", SqlDbType.NVarChar)).Value =
+            entity.Title is null ? DBNull.Value : entity.Title;
+        cmd.Parameters.Add(new SqlParameter("@author", SqlDbType.NVarChar)).Value =
+            entity.Author is null ? DBNull.Value : entity.Author;
         cmd.Parameters.Add(new SqlParameter("@pages", SqlDbType.Int)).Value =
             entity.Pages.GetValueOrDefault(0) == 0 ? DBNull.Value : entity.Pages;
         cmd.Parameters.Add(new SqlParameter("@runTimeMinutes", SqlDbType.Int)).Value =
             entity.RunTimeMinutes.GetValueOrDefault(0) == 0 ? DBNull.Value : entity.RunTimeMinutes;
         cmd.Parameters.Add(new SqlParameter("@isBorrowable", SqlDbType.Bit)).Value = entity.IsBorrowable;
-        cmd.Parameters.Add(new SqlParameter("@borrower", SqlDbType.NVarChar)).Value = entity.Borrower;
-        cmd.Parameters.Add(new SqlParameter("@borrowDate", SqlDbType.Date)).Value = entity.BorrowDate;
+        cmd.Parameters.Add(new SqlParameter("@borrower", SqlDbType.NVarChar)).Value =
+            entity.Borrower is null ? DBNull.Value : entity.Borrower;
+        cmd.Parameters.Add(new SqlParameter("@borrowDate", SqlDbType.Date)).Value =
+            entity.BorrowDate is null ? DBNull.Value : entity.BorrowDate;
         cmd.Parameters.Add(new SqlParameter("@type", SqlDbType.Int)).Value = (int) entity.Type;
 
         await cmd.ExecuteNonQueryAsync(cancellationToken);

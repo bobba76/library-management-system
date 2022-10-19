@@ -12,6 +12,6 @@ public class UpdateLibraryItemCommand : IdentityUpdateCommand, ICommand<LibraryI
     public int? Pages { get; set; }
     public int? RunTimeMinutes { get; set; }
     public string? Borrower { get; set; }
-    public DateOnly? BorrowDate { get; set; }
+    public DateTime? BorrowDate { get; set; }
     public LibraryItemType? Type { get; set; }
 }

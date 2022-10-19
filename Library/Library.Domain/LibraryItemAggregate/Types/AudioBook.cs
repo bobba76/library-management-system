@@ -39,11 +39,14 @@ public class AudioBook : LibraryItem
             parameters.Id,
             parameters.CategoryId,
             parameters.Title,
-            parameters.RunTimeMinutes
+            parameters.RunTimeMinutes,
+            parameters.BorrowDate,
+            parameters.Borrower
         );
     }
 
-    private static AudioBook Update(int id, int? categoryId, string? title, int? runTimeMinutes)
+    private static AudioBook Update(int id, int? categoryId, string? title, int? runTimeMinutes, DateTime? borrowDate,
+        string? borrower)
     {
         AudioBook libraryItem = new()
         {
@@ -61,6 +64,12 @@ public class AudioBook : LibraryItem
         // TODO: Checka om is not null endast är värden över 0. Eller om alla värden, inklusive 0 och negativa räknas som true
         if (runTimeMinutes is not null)
             libraryItem.RunTimeMinutes = runTimeMinutes;
+
+        if (borrowDate is not null)
+            libraryItem.BorrowDate = borrowDate;
+
+        if (borrower is not null)
+            libraryItem.Borrower = borrower;
 
         return libraryItem;
     }

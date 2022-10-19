@@ -25,7 +25,7 @@ public class UpdateEmployeeCommandHandler : IRequestHandler<UpdateEmployeeComman
         {
             case EmployeeRole.Ceo:
             {
-                var ceoExists = employees.Any(e => e.Role.Equals(EmployeeRole.Ceo));
+                var ceoExists = employees.Any(e => e.Role.Equals(EmployeeRole.Ceo) && !e.Id.Equals(request.Id));
 
                 if (ceoExists)
                     throw new ArgumentException(
