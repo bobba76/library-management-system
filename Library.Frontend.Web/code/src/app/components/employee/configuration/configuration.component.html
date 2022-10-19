@@ -64,7 +64,7 @@
                 <div *ngIf="roleEmployeeChosen()">
                   <div
                     *ngIf="
-                      (managersExists() | async)?.length > 0;
+                      (getManagers() | async)?.length > 0;
                       then formCard;
                       else roleEmployeeChosenAndNoManagerExist
                     "
@@ -162,7 +162,7 @@
                     >
                       <option hidden></option>
                       <option
-                        *ngFor="let manager of managersExists() | async"
+                        *ngFor="let manager of getManagers() | async"
                         [ngValue]="manager.id"
                       >
                         {{ manager.firstName }} {{ manager.lastName }}
@@ -175,16 +175,16 @@
                     <label for="managerId" class="clr-col-12">Manager</label>
                     <select
                       *ngIf="
-                        (managersOrCEOExists() | async)?.length > 0;
+                        (getManagersAndCEO() | async)?.length > 0;
                         else noManagersOrCEO
                       "
                       clrSelect
                       formControlName="managerId"
                       class="clr-col-12"
                     >
-                      <option></option>
+                      <option value="0"></option>
                       <option
-                        *ngFor="let manager of managersOrCEOExists() | async"
+                        *ngFor="let manager of getManagersAndCEO() | async"
                         [ngValue]="manager.id"
                       >
                         {{ manager.firstName }} {{ manager.lastName }}

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Select, Store } from '@ngxs/store';
+import { Actions, ofActionSuccessful, Select, Store } from '@ngxs/store';
 import { map, Observable } from 'rxjs';
 
 import {
@@ -26,7 +26,8 @@ export class ConfigurationManagerToGridComponent {
   constructor(
     private store: Store,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private actions$: Actions
   ) {}
 
   getManagerReferences(): Observable<Array<EmployeeModel>> {
@@ -48,17 +49,31 @@ export class ConfigurationManagerToGridComponent {
     this.redirectTo('employee/' + this.selected[0].id);
   }
 
-  redirectTo(uri: string) {
-    this.router
-      .navigateByUrl('/', { skipLocationChange: true })
-      .then(() => this.router.navigate([uri]));
-  }
-
   deleteSelectedReferences(): void {
+    this.refreshComponentOnUpdate(); 
+    
     for (const employee of this.selected) {
       this.store.dispatch(
         new EmployeeActions.Update(employee.id, { managerId: null })
       );
     }
+  }
+
+  refreshComponentOnUpdate(): void {
+    const id = parseInt(this.route.snapshot.paramMap.get('id'));
+
+    this.actions$
+      .pipe(
+        ofActionSuccessful(
+          EmployeeActions.UpdateSuccessful
+        )
+      )
+      .subscribe(() => this.redirectTo('employee/' + id.toString()));
+  }
+
+  redirectTo(uri: string) {
+    this.router
+      .navigateByUrl('/', { skipLocationChange: true })
+      .then(() => this.router.navigate([uri]));
   }
 }

@@ -87,7 +87,7 @@ export class EmployeeConfigurationComponent implements OnInit, OnDestroy {
   }
 
   setConfigurationMode(id: string): void {
-    if (!id) this.navigateBack();
+    if (!id) this.redirectTo('employee');
 
     if (id === ConfigurationMode.Create) {
       this.configurationMode = ConfigurationMode.Create;
@@ -122,13 +122,13 @@ export class EmployeeConfigurationComponent implements OnInit, OnDestroy {
                 },
                 error: (err: any) => {
                   console.error(err);
-                  this.navigateBack();
+                  this.redirectTo('employee');
                 },
               });
             },
             error: (err) => {
-              console.log(err);
-              this.navigateBack();
+              console.error(err);
+              this.redirectTo('employee');
             },
           });
 
@@ -210,7 +210,7 @@ export class EmployeeConfigurationComponent implements OnInit, OnDestroy {
   }
 
   cancel(): void {
-    this.navigateBack();
+    this.redirectTo('employee');
   }
 
   formIsInvalid(): boolean {
@@ -220,7 +220,22 @@ export class EmployeeConfigurationComponent implements OnInit, OnDestroy {
   }
 
   roleEmployeeFormInvalid(): boolean {
-    return this.roleEmployeeChosen() && !this.form.controls.managerId.value;
+    let managerIsCeo = false;
+    this.getManagersAndCEO()
+      .pipe(
+        mergeMap((employees) => employees),
+        first(
+          (manager) =>
+            manager.id === this.form.controls.managerId.value &&
+            manager.role === EmployeeRole.Ceo
+        )
+      )
+      .subscribe(() => (managerIsCeo = true));
+
+    return (
+      this.roleEmployeeChosen() &&
+      (!this.form.controls.managerId.value || managerIsCeo)
+    );
   }
 
   roleEmployeeChosen(): boolean {
@@ -275,15 +290,17 @@ export class EmployeeConfigurationComponent implements OnInit, OnDestroy {
     return configurationModeName.get(mode) ?? '';
   }
 
-  navigateBack(): void {
-    this.router.navigate(['../'], { relativeTo: this.route });
+  redirectTo(uri: string) {
+    this.router
+      .navigateByUrl('/', { skipLocationChange: true })
+      .then(() => this.router.navigate([uri]));
   }
 
-  managersExists(): Observable<Array<EmployeeModel>> {
+  getManagers(): Observable<Array<EmployeeModel>> {
     return this.store.select(EmployeeState.getManagers);
   }
 
-  managersOrCEOExists(): Observable<Array<EmployeeModel>> {
+  getManagersAndCEO(): Observable<Array<EmployeeModel>> {
     return this.store.select(EmployeeState.getManagersAndCEO);
   }
 
@@ -293,13 +310,14 @@ export class EmployeeConfigurationComponent implements OnInit, OnDestroy {
 
   navigateBackOnSuccess(): void {
     this.actions$
-      .pipe(ofActionSuccessful(EmployeeActions.Create, EmployeeActions.Update))
-      .subscribe({
-        next: () => this.navigateBack(),
-        error: (err) => {
-          console.log(err);
-          this.navigateBack();
-        },
+      .pipe(
+        ofActionSuccessful(
+          EmployeeActions.CreateSuccessful,
+          EmployeeActions.UpdateSuccessful
+        )
+      )
+      .subscribe(() => {
+        this.redirectTo('employee');
       });
   }
   // #endregion

@@ -18,7 +18,7 @@
   <clr-icon shape="pencil"></clr-icon> Ändra
 </button>
 
-<clr-datagrid [(clrDgSelected)]="selected">
+<clr-datagrid [(clrDgSelected)]="selected" [clrDgRowSelection]="true">
   <clr-dg-column [clrDgField]="'firstName'">Anställd</clr-dg-column>
   <clr-dg-column [clrDgField]="'role'">Roll</clr-dg-column>
 

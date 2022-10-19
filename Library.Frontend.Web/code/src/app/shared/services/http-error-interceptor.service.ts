@@ -9,13 +9,8 @@ import { Injectable } from '@angular/core';
 import { EMPTY, Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
-import { AlertType } from '@shared/models/alert.model';
-import { AlertService } from './alert.service';
-
 @Injectable()
 export class HttpErrorInterceptor implements HttpInterceptor {
-  constructor(private alertService: AlertService) {}
-
   intercept(
     request: HttpRequest<any>,
     next: HttpHandler
@@ -33,11 +28,7 @@ export class HttpErrorInterceptor implements HttpInterceptor {
           );
         }
 
-        this.alertService.error(
-          'Oh ohhh, an error occured. Please check Console Log for more information.',
-          { keepAfterRouteChange: true }
-        );
-
+        alert('Oh ohhh, an error occured. Please check Console Log for more information.')
         // If you want to return a new response:
         //return of(new HttpResponse({body: [{name: "Default value..."}]}));
 

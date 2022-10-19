@@ -6,7 +6,7 @@ import {
   EmployeeRole,
   employeeRoleName
 } from '@models/employee/employee.model';
-import { tap } from 'rxjs';
+import { first, tap } from 'rxjs';
 import { EmployeeActions } from './employee.action';
 import { EmployeeService } from './employee.service';
 
@@ -101,16 +101,27 @@ export class EmployeeState {
     ctx: StateContext<EmployeeStateModel>,
     { inputModel }: EmployeeActions.Create
   ) {
-    return this.employeeService.createEmployee(inputModel).pipe(
-      tap((employees) => {
-        const state = ctx.getState();
+    return this.employeeService
+      .createEmployee(inputModel)
+      .pipe(first())
+      .subscribe({
+        next: (employees) =>
+          ctx.dispatch(new EmployeeActions.CreateSuccessful(employees)),
+        error: () => ctx.dispatch(new EmployeeActions.CreateFailed()),
+      });
+  }
 
-        ctx.setState({
-          ...state,
-          employees,
-        });
-      })
-    );
+  @Action(EmployeeActions.CreateSuccessful)
+  CreateSuccessful(
+    ctx: StateContext<EmployeeStateModel>,
+    { employees }: EmployeeActions.CreateSuccessful
+  ) {
+    const state = ctx.getState();
+
+    return ctx.setState({
+      ...state,
+      employees,
+    });
   }
 
   @Action(EmployeeActions.Update)
@@ -118,16 +129,27 @@ export class EmployeeState {
     ctx: StateContext<EmployeeStateModel>,
     { id, inputModel }: EmployeeActions.Update
   ) {
-    return this.employeeService.updateEmployee(id, inputModel).pipe(
-      tap((employee) => {
-        const state = ctx.getState();
+    return this.employeeService
+      .updateEmployee(id, inputModel)
+      .pipe(first())
+      .subscribe({
+        next: (employee) =>
+          ctx.dispatch(new EmployeeActions.UpdateSuccessful(employee)),
+        error: () => ctx.dispatch(new EmployeeActions.UpdateFailed()),
+      });
+  }
 
-        ctx.setState({
-          ...state,
-          employee,
-        });
-      })
-    );
+  @Action(EmployeeActions.UpdateSuccessful)
+  UpdateSuccessful(
+    ctx: StateContext<EmployeeStateModel>,
+    { employee }: EmployeeActions.UpdateSuccessful
+  ) {
+    const state = ctx.getState();
+
+    return ctx.setState({
+      ...state,
+      employee,
+    });
   }
 
   @Action(EmployeeActions.Delete)
@@ -135,15 +157,26 @@ export class EmployeeState {
     ctx: StateContext<EmployeeStateModel>,
     { id }: EmployeeActions.Delete
   ) {
-    return this.employeeService.deleteEmployee(id).pipe(
-      tap((employees) => {
-        const state = ctx.getState();
+    return this.employeeService
+      .deleteEmployee(id)
+      .pipe(first())
+      .subscribe({
+        next: (employees) =>
+          ctx.dispatch(new EmployeeActions.DeleteSuccessful(employees)),
+        error: () => ctx.dispatch(new EmployeeActions.DeleteFailed()),
+      });
+  }
 
-        ctx.setState({
-          ...state,
-          employees,
-        });
-      })
-    );
+  @Action(EmployeeActions.DeleteSuccessful)
+  DeleteSuccessful(
+    ctx: StateContext<EmployeeStateModel>,
+    { employees }: EmployeeActions.DeleteSuccessful
+  ) {
+    const state = ctx.getState();
+
+    return ctx.setState({
+      ...state,
+      employees,
+    });
   }
 }

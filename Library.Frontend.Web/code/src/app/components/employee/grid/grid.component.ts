@@ -57,7 +57,7 @@ export class EmployeeGridComponent implements OnInit {
         next: (employee) =>
           (managerName = `${employee.firstName} ${employee.lastName}`),
         error: (err) => {
-          console.log(err);
+          console.error(err);
         },
       });
 
