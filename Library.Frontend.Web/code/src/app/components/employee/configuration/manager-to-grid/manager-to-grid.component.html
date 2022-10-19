@@ -1,0 +1,42 @@
+<h4>Manager till...</h4>
+
+<button
+  type="button"
+  class="btn btn-sm"
+  (click)="deleteSelectedReferences()"
+  [disabled]="selected.length === 0"
+>
+  <clr-icon shape="times"></clr-icon> Ta bort
+</button>
+
+<button
+  type="button"
+  class="btn btn-sm"
+  (click)="editSelectedEmployee()"
+  [disabled]="selected.length !== 1"
+>
+  <clr-icon shape="pencil"></clr-icon> Ändra
+</button>
+
+<clr-datagrid [(clrDgSelected)]="selected">
+  <clr-dg-column [clrDgField]="'firstName'">Anställd</clr-dg-column>
+  <clr-dg-column [clrDgField]="'role'">Roll</clr-dg-column>
+
+  <clr-dg-row
+    *clrDgItems="let employee of getManagerReferences() | async"
+    [clrDgItem]="employee"
+  >
+    <clr-dg-cell>{{ employee.id }} - {{ employee.firstName }} {{ employee.lastName }}</clr-dg-cell>
+    <clr-dg-cell>{{ getEmployeeRoleName(employee.role) }}</clr-dg-cell>
+  </clr-dg-row>
+
+  <clr-dg-footer>
+    <clr-dg-pagination #pagination [clrDgPageSize]="10">
+      <clr-dg-page-size [clrPageSizeOptions]="[10, 20, 50, 100]"
+        >Anställda per sida</clr-dg-page-size
+      >
+      {{ pagination.firstItem + 1 }} - {{ pagination.lastItem + 1 }} av
+      {{ pagination.totalItems }} anställda
+    </clr-dg-pagination>
+  </clr-dg-footer>
+</clr-datagrid>

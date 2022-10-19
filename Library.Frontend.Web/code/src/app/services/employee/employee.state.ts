@@ -38,16 +38,22 @@ export class EmployeeState {
     return state.employee;
   }
 
+  // Only Managers and CEO (If employee is selected, do not include)
   @Selector([EmployeeState])
   static getManagersAndCEO(state: EmployeeStateModel) {
     return state.employees.filter(
-      (e) => e.role === EmployeeRole.Manager || e.role === EmployeeRole.Ceo
+      (e) =>
+        (e.role === EmployeeRole.Manager || e.role === EmployeeRole.Ceo) &&
+        e.id !== state.employee.id
     );
   }
 
+  // Only Managers (If employee is selected, do not include)
   @Selector([EmployeeState])
   static getManagers(state: EmployeeStateModel) {
-    return state.employees.filter((e) => e.role === EmployeeRole.Manager);
+    return state.employees.filter(
+      (e) => e.role === EmployeeRole.Manager && e.id !== state.employee.id
+    );
   }
 
   /* ---------- Actions ---------- */

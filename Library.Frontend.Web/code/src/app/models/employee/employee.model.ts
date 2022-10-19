@@ -6,7 +6,7 @@ class EmployeeModel implements Entity {
   lastName: string;
   salary: number;
   role: EmployeeRole;
-  managerId: number;
+  managerId?: number;
 
   constructor() {
     this.id = 0;
@@ -41,16 +41,16 @@ const salaryCoefficient = new Map<EmployeeRole, number>([
 type CreateEmployeeInputModel = {
   firstName: string;
   lastName: string;
-  salaryInput: number;
+  salary: number;
   role: EmployeeRole;
   managerId?: number;
 };
 
 type UpdateEmployeeInputModel = {
-  firstName: string;
-  lastName: string;
-  salaryInput: number;
-  role: EmployeeRole;
+  firstName?: string;
+  lastName?: string;
+  salary?: number;
+  role?: EmployeeRole;
   managerId?: number;
 };
 

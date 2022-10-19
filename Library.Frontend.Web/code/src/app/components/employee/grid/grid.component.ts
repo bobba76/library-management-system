@@ -20,7 +20,9 @@ import { EmployeeState } from '@services/employee/employee.state';
   styleUrls: ['./grid.component.scss'],
 })
 export class EmployeeGridComponent implements OnInit {
-  @Select(EmployeeState.getEmployees) employees$: Observable<Array<EmployeeModel>>;
+  @Select(EmployeeState.getEmployees) employees$: Observable<
+    Array<EmployeeModel>
+  >;
   selected = new Array<EmployeeModel>();
 
   constructor(

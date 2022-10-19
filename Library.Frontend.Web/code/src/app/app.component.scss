@@ -1,0 +1,13 @@
+clr-main-container {
+  position: relative;
+}
+
+library-app-alert {
+  position: absolute;
+  top: 65px;
+  left: 0; 
+  right: 0; 
+  margin-left: auto; 
+  margin-right: auto; 
+  width: 70vw; /* Need a specific value to work */
+}

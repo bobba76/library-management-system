@@ -3,7 +3,7 @@ import { NonNullableFormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ClrLoadingState } from '@clr/angular';
 import { Actions, ofActionSuccessful, Select, Store } from '@ngxs/store';
-import { first, Observable } from 'rxjs';
+import { first, flatMap, map, mergeMap, Observable } from 'rxjs';
 
 import {
   CreateEmployeeInputModel,
@@ -54,7 +54,7 @@ export class EmployeeConfigurationComponent implements OnInit, OnDestroy {
         Validators.pattern('^[0-9]*$'),
       ],
     ],
-    role: [EmployeeRole.Employee, Validators.required,],
+    role: [EmployeeRole.Employee, Validators.required],
     managerId: [0],
   });
 
@@ -70,7 +70,7 @@ export class EmployeeConfigurationComponent implements OnInit, OnDestroy {
     this.loadingState = ClrLoadingState.LOADING;
 
     const id = this.route.snapshot.paramMap.get('id');
-    
+
     this.setConfigurationMode(id);
 
     if (this.configurationMode === ConfigurationMode.Edit)
@@ -80,8 +80,6 @@ export class EmployeeConfigurationComponent implements OnInit, OnDestroy {
 
     // We need all the employees to be able to set Manager.
     this.getEmployees();
-
-    this.navigateBackOnSucess();
   }
 
   ngOnDestroy(): void {
@@ -163,6 +161,8 @@ export class EmployeeConfigurationComponent implements OnInit, OnDestroy {
   }
 
   submit(): void {
+    this.navigateBackOnSuccess();
+
     this.submitBtnState = ClrLoadingState.LOADING;
 
     switch (this.form.controls.role.value) {
@@ -177,7 +177,7 @@ export class EmployeeConfigurationComponent implements OnInit, OnDestroy {
       const inputModel: CreateEmployeeInputModel = {
         firstName: this.form.controls.firstName.value,
         lastName: this.form.controls.lastName.value,
-        salaryInput: this.form.controls.salary.value,
+        salary: this.form.controls.salary.value,
         role: this.form.controls.role.value,
         managerId: this.form.controls.managerId.value,
       };
@@ -189,7 +189,7 @@ export class EmployeeConfigurationComponent implements OnInit, OnDestroy {
     const inputModel: UpdateEmployeeInputModel = {
       firstName: this.form.controls.firstName.value,
       lastName: this.form.controls.lastName.value,
-      salaryInput: this.form.controls.salary.value,
+      salary: this.form.controls.salary.value,
       role: this.form.controls.role.value,
       managerId: this.form.controls.managerId.value,
     };
@@ -287,7 +287,11 @@ export class EmployeeConfigurationComponent implements OnInit, OnDestroy {
     return this.store.select(EmployeeState.getManagersAndCEO);
   }
 
-  navigateBackOnSucess(): void {
+  isEditMode(): boolean {
+    return this.configurationMode === this.ConfigurationModeEnum.Edit;
+  }
+
+  navigateBackOnSuccess(): void {
     this.actions$
       .pipe(ofActionSuccessful(EmployeeActions.Create, EmployeeActions.Update))
       .subscribe({

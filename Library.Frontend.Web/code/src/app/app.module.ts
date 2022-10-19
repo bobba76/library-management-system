@@ -3,6 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { MenuBarComponent } from '@components/menu-bar/menu-bar.component';
+import { AppAlertComponent } from '@shared/components/app-alert/app-alert.component';
 import { AppComponent } from './app.component';
 
 import { routerModule as AppRoutingModule } from '@modules/imports/app-routing.module';
@@ -11,7 +12,7 @@ import { providers as AppProviders } from '@modules/providers/app-providers.modu
 import { SharedModule } from '@shared/modules/shared.module';
 
 @NgModule({
-  declarations: [AppComponent, MenuBarComponent],
+  declarations: [AppComponent, AppAlertComponent, MenuBarComponent],
 
   imports: [
     BrowserModule,

@@ -3,226 +3,241 @@
   <h2>{{ getConfigurationModeName(configurationMode) }} Anställd</h2>
 </div>
 
-<div class="progress top loop" *ngIf="isLoading()">
+<div class="progress top loop" [hidden]="!isLoading()">
   <progress></progress>
 </div>
 
-<div class="content-container" *ngIf="!isLoading()">
+<div class="content-container" [hidden]="isLoading()">
   <div class="content-area">
     <div class="category-container">
-      <form (ngSubmit)="submit()" [formGroup]="form" class="clr-form">
-        <div class="card">
-          <div class="card-header">
-            <div class="btn-group">
-              <div class="radio btn">
-                <input
-                  [autofocus]
-                  type="radio"
-                  name="role"
-                  id="employee"
-                  formControlName="role"
-                  (change)="switchedRole(EmployeeRoleEnum.Employee)"
-                  [value]="EmployeeRoleEnum.Employee"
-                />
-                <label for="employee">Anställd</label>
+      <div class="clr-row">
+        <div class="clr-col-lg-4">
+          <form (ngSubmit)="submit()" [formGroup]="form" class="clr-form">
+            <div class="card">
+              <div class="card-header">
+                <div class="btn-group">
+                  <div class="radio btn">
+                    <input
+                      [autofocus]
+                      type="radio"
+                      name="role"
+                      id="employee"
+                      formControlName="role"
+                      (change)="switchedRole(EmployeeRoleEnum.Employee)"
+                      [value]="EmployeeRoleEnum.Employee"
+                    />
+                    <label for="employee">Anställd</label>
+                  </div>
+                  <div class="radio btn">
+                    <input
+                      type="radio"
+                      name="role"
+                      id="manager"
+                      formControlName="role"
+                      (change)="switchedRole(EmployeeRoleEnum.Manager)"
+                      [value]="EmployeeRoleEnum.Manager"
+                    />
+                    <label for="manager">Manager</label>
+                  </div>
+                  <div class="radio btn">
+                    <input
+                      type="radio"
+                      name="role"
+                      id="ceo"
+                      formControlName="role"
+                      (change)="switchedRole(EmployeeRoleEnum.Ceo)"
+                      [value]="EmployeeRoleEnum.Ceo"
+                    />
+                    <label for="ceo">CEO</label>
+                  </div>
+                </div>
               </div>
-              <div class="radio btn">
-                <input
-                  type="radio"
-                  name="role"
-                  id="manager"
-                  formControlName="role"
-                  (change)="switchedRole(EmployeeRoleEnum.Manager)"
-                  [value]="EmployeeRoleEnum.Manager"
-                />
-                <label for="manager">Manager</label>
-              </div>
-              <div class="radio btn">
-                <input
-                  type="radio"
-                  name="role"
-                  id="ceo"
-                  formControlName="role"
-                  (change)="switchedRole(EmployeeRoleEnum.Ceo)"
-                  [value]="EmployeeRoleEnum.Ceo"
-                />
-                <label for="ceo">CEO</label>
-              </div>
-            </div>
-          </div>
 
-          <div *ngIf="configurationMode === ConfigurationModeEnum.Create || configurationMode === ConfigurationModeEnum.Edit && (employee$ | async)">
-
-          <!-- Show form if Role Employee is chosen and atleast 1 Manager exists -->
-          <div *ngIf="roleEmployeeChosen()">
-            <div
-              *ngIf="
-                managersExists() | async;
-                then formCard;
-                else roleEmployeeChosenAndNoManagerExist
-              "
-            ></div>
-          </div>
-
-          <!-- Show form if Role Manager is chosen -->
-          <div *ngIf="roleManagerChosen(); then formCard"></div>
-
-          <!-- Show form if Role CEO is chosen -->
-          <div *ngIf="roleCEOChosen(); then formCard"></div>
-
-          </div>
-
-
-          <ng-template #formCard>
-            <div class="card-block">
-              <!-- #region Names -->
-              <clr-input-container>
-                <label for="firstName" class="clr-col-12 required"
-                  >Förnamn</label
-                >
-                <input
-                  name="firstName"
-                  id="firstName"
-                  formControlName="firstName"
-                  required
-                  clrInput
-                  type="text"
-                  class="clr-col-12 clr-col-sm-6 clr-col-lg-3"
-                />
-                <clr-control-error *clrIfError="'required'"
-                  >Detta fält är obligatoriskt.</clr-control-error
-                >
-              </clr-input-container>
-
-              <clr-input-container>
-                <label for="lastName" class="clr-col-12 required"
-                  >Efternamn</label
-                >
-                <input
-                  name="lastName"
-                  id="lastName"
-                  formControlName="lastName"
-                  required
-                  clrInput
-                  type="text"
-                  class="clr-col-12 clr-col-sm-6 clr-col-lg-3"
-                />
-                <clr-control-error *clrIfError="'required'"
-                  >Detta fält är obligatoriskt.</clr-control-error
-                >
-              </clr-input-container>
-              <!-- #endregion -->
-
-              <!-- #region Lön -->
-              <clr-input-container>
-                <label for="salary" class="clr-col-12 required">Lön</label>
-                <input
-                  name="salary"
-                  id="salary"
-                  formControlName="salary"
-                  clrInput
-                  max="10"
-                  min="1"
-                  type="number"
-                  class="clr-col-12 clr-col-sm-6 clr-col-lg-2"
-                />
-                <clr-control-helper>Heltal mellan 1 - 10.</clr-control-helper>
-                <clr-control-error *clrIfError="'required'"
-                  >Detta fält är obligatoriskt.</clr-control-error
-                >
-                <clr-control-error *clrIfError="'min'"
-                  >Lönen måste vara ett heltal mellan 1 - 10.</clr-control-error
-                >
-                <clr-control-error *clrIfError="'max'"
-                  >Lönen måste vara ett heltal mellan 1 - 10.</clr-control-error
-                >
-                <clr-control-error *clrIfError="'pattern'"
-                  >Nummer endast.</clr-control-error
-                >
-              </clr-input-container>
-              <!-- #endregion -->
-
-              <!-- #region Manager -->
-              <!-- Only for Employees -->
-              <clr-select-container
-                *ngIf="roleEmployeeChosen() && managersExists() | async"
+              <div
+                *ngIf="
+                  configurationMode === ConfigurationModeEnum.Create ||
+                  (configurationMode === ConfigurationModeEnum.Edit &&
+                    (employee$ | async))
+                "
               >
-                <label for="managerId" class="clr-col-12">Manager</label>
-                <select
-                  clrSelect
-                  formControlName="managerId"
-                  class="clr-col-sm-5 clr-col-md-2"
-                >
-                  <option hidden></option>
-                  <option
-                    *ngFor="let manager of managersExists() | async"
-                    [ngValue]="manager.id"
-                  >
-                    {{ manager.firstName }} {{ manager.lastName }}
-                  </option>
-                </select>
-              </clr-select-container>
+                <!-- Show form if Role Employee is chosen and atleast 1 Manager exists -->
+                <div *ngIf="roleEmployeeChosen()">
+                  <div
+                    *ngIf="
+                      (managersExists() | async)?.length > 0;
+                      then formCard;
+                      else roleEmployeeChosenAndNoManagerExist
+                    "
+                  ></div>
+                </div>
 
-              <!-- Only for Managers -->
-              <clr-select-container *ngIf="roleManagerChosen()">
-                <label for="managerId" class="clr-col-12">Manager</label>
-                <select
-                  *ngIf="managersOrCEOExists() | async; else noManagersOrCEO"
-                  clrSelect
-                  formControlName="managerId"
-                  class="clr-col-12 clr-col-sm-6 clr-col-lg-3"
-                >
-                  <option></option>
-                  <option
-                    *ngFor="let manager of managersOrCEOExists() | async"
-                    [ngValue]="manager.id"
-                  >
-                    {{ manager.firstName }} {{ manager.lastName }}
-                  </option>
-                </select>
-                <ng-template #noManagersOrCEO>
-                  <select
-                    clrSelect
-                    formControlName="managerId"
-                    class="clr-col-12 clr-col-sm-6 clr-col-lg-3"
-                  >
-                    <option value="" selected disabled>
-                      Ingen CEO eller manager existerar
-                    </option>
-                  </select>
-                </ng-template>
-              </clr-select-container>
-              <!--#endregion -->
-            </div>
+                <!-- Show form if Role Manager is chosen -->
+                <div *ngIf="roleManagerChosen(); then formCard"></div>
 
-            <div class="card-footer">
-              <div class="space-top">
-                <button
-                  [clrLoading]="submitBtnState"
-                  type="submit"
-                  class="btn btn-primary"
-                  [disabled]="formIsInvalid()"
-                >
-                  Skapa
-                </button>
-                <button type="button" class="btn" (click)="cancel()">
-                  Avbryt
-                </button>
+                <!-- Show form if Role CEO is chosen -->
+                <div *ngIf="roleCEOChosen(); then formCard"></div>
               </div>
-            </div>
-          </ng-template>
 
-          <ng-template #roleEmployeeChosenAndNoManagerExist>
-            <div class="card-block">
-              <h4 class="card-title">Ingen Manager existerar.</h4>
-              <div class="card-text">
-                Alla personer med rollen Anställd behöver ha en Manager. Skapa
-                en Manager först.
-              </div>
+              <ng-template #formCard>
+                <div class="card-block">
+                  <!-- #region Names -->
+                  <clr-input-container>
+                    <label for="firstName" class="clr-col-12 required"
+                      >Förnamn</label
+                    >
+                    <input
+                      name="firstName"
+                      id="firstName"
+                      formControlName="firstName"
+                      required
+                      clrInput
+                      type="text"
+                      class="clr-col-12 clr-col-sm-6 clr-col-lg-3"
+                    />
+                    <clr-control-error *clrIfError="'required'"
+                      >Detta fält är obligatoriskt.</clr-control-error
+                    >
+                  </clr-input-container>
+
+                  <clr-input-container>
+                    <label for="lastName" class="clr-col-12 required"
+                      >Efternamn</label
+                    >
+                    <input
+                      name="lastName"
+                      id="lastName"
+                      formControlName="lastName"
+                      required
+                      clrInput
+                      type="text"
+                      class="clr-col-12 clr-col-sm-6 clr-col-lg-3"
+                    />
+                    <clr-control-error *clrIfError="'required'"
+                      >Detta fält är obligatoriskt.</clr-control-error
+                    >
+                  </clr-input-container>
+                  <!-- #endregion -->
+
+                  <!-- #region Lön -->
+                  <clr-input-container>
+                    <label for="salary" class="clr-col-12 required">Lön</label>
+                    <input
+                      name="salary"
+                      id="salary"
+                      formControlName="salary"
+                      clrInput
+                      max="10"
+                      min="1"
+                      type="number"
+                      class="clr-col-12"
+                    />
+                    <clr-control-helper
+                      >Heltal mellan 1 - 10.</clr-control-helper
+                    >
+                    <clr-control-error *clrIfError="'required'"
+                      >Detta fält är obligatoriskt.</clr-control-error
+                    >
+                    <clr-control-error *clrIfError="'min'"
+                      >Lönen måste vara ett heltal mellan 1 -
+                      10.</clr-control-error
+                    >
+                    <clr-control-error *clrIfError="'max'"
+                      >Lönen måste vara ett heltal mellan 1 -
+                      10.</clr-control-error
+                    >
+                    <clr-control-error *clrIfError="'pattern'"
+                      >Nummer endast.</clr-control-error
+                    >
+                  </clr-input-container>
+                  <!-- #endregion -->
+
+                  <!-- #region Manager -->
+                  <!-- Only for Employees -->
+                  <clr-select-container *ngIf="roleEmployeeChosen()">
+                    <label for="managerId" class="clr-col-12">Manager</label>
+                    <select
+                      clrSelect
+                      formControlName="managerId"
+                      class="clr-col-12"
+                    >
+                      <option hidden></option>
+                      <option
+                        *ngFor="let manager of managersExists() | async"
+                        [ngValue]="manager.id"
+                      >
+                        {{ manager.firstName }} {{ manager.lastName }}
+                      </option>
+                    </select>
+                  </clr-select-container>
+
+                  <!-- Only for Managers -->
+                  <clr-select-container *ngIf="roleManagerChosen()">
+                    <label for="managerId" class="clr-col-12">Manager</label>
+                    <select
+                      *ngIf="
+                        (managersOrCEOExists() | async)?.length > 0;
+                        else noManagersOrCEO
+                      "
+                      clrSelect
+                      formControlName="managerId"
+                      class="clr-col-12"
+                    >
+                      <option></option>
+                      <option
+                        *ngFor="let manager of managersOrCEOExists() | async"
+                        [ngValue]="manager.id"
+                      >
+                        {{ manager.firstName }} {{ manager.lastName }}
+                      </option>
+                    </select>
+                    <ng-template #noManagersOrCEO>
+                      <select
+                        clrSelect
+                        formControlName="managerId"
+                        class="clr-col-12"
+                      >
+                        <option value="0" selected disabled>
+                          Ingen CEO eller Manager existerar
+                        </option>
+                      </select>
+                    </ng-template>
+                  </clr-select-container>
+                  <!--#endregion -->
+                </div>
+
+                <div class="card-footer">
+                  <div class="space-top">
+                    <button
+                      [clrLoading]="submitBtnState"
+                      type="submit"
+                      class="btn btn-primary"
+                      [disabled]="formIsInvalid()"
+                    >
+                      Skapa
+                    </button>
+                    <button type="button" class="btn" (click)="cancel()">
+                      Avbryt
+                    </button>
+                  </div>
+                </div>
+              </ng-template>
+
+              <ng-template #roleEmployeeChosenAndNoManagerExist>
+                <div class="card-block">
+                  <h4 class="card-title">Ingen Manager existerar.</h4>
+                  <div class="card-text">
+                    Alla personer med rollen Anställd behöver ha en Manager.
+                    Skapa en Manager först.
+                  </div>
+                </div>
+              </ng-template>
             </div>
-          </ng-template>
+          </form>
         </div>
-      </form>
+        <div class="clr-col-lg-4">
+          <configuration-manager-to-grid [hidden]="!isEditMode()"></configuration-manager-to-grid>
+        </div>
+      </div>
     </div>
   </div>
 </div>
