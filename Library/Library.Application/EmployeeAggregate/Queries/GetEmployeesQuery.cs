@@ -1,5 +1,4 @@
-﻿using System.ComponentModel;
-using Library.Domain.EmployeeAggregate;
+﻿using Library.Domain.EmployeeAggregate;
 using Library.SharedKernel.Interfaces;
 
 namespace Library.Application.EmployeeAggregate.Queries;

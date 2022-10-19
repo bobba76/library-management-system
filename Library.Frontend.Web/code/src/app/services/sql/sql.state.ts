@@ -31,6 +31,34 @@ export class SQLState {
   }
 
   /* ---------- Actions ---------- */
+  @Action(SQLActions.UpdateConnectionString)
+  UpdateConnectionString(
+    ctx: StateContext<SQLStateModel>,
+    { inputModel }: SQLActions.UpdateConnectionString
+  ) {
+    return this.sqlService
+      .updateConnectionString(inputModel)
+      .pipe(first())
+      .subscribe({
+        next: (sqlStatus) =>
+          ctx.dispatch(new SQLActions.ResetDataSuccessful(sqlStatus)),
+        error: () => ctx.dispatch(new SQLActions.ResetDataFailed()),
+      });
+  }
+
+  @Action(SQLActions.UpdateConnectionStringSuccessful)
+  UpdateConnectionStringSuccessful(
+    ctx: StateContext<SQLStateModel>,
+    { sqlStatus }: SQLActions.UpdateConnectionStringSuccessful
+  ) {
+    const state = ctx.getState();
+
+    return ctx.setState({
+      ...state,
+      sqlStatus,
+    });
+  }
+
   @Action(SQLActions.ResetData)
   ResetData(ctx: StateContext<SQLStateModel>) {
     return this.sqlService
@@ -44,7 +72,7 @@ export class SQLState {
   }
 
   @Action(SQLActions.ResetDataSuccessful)
-  ResetDataSuccessful(ctx: StateContext<SQLStateModel>, sqlStatus: string) {
+  ResetDataSuccessful(ctx: StateContext<SQLStateModel>, { sqlStatus }: SQLActions.ResetDataSuccessful) {
     const state = ctx.getState();
 
     return ctx.setState({
@@ -66,7 +94,7 @@ export class SQLState {
   }
 
   @Action(SQLActions.DeleteAllDataSuccessful)
-  DeleteAllDataSuccessful(ctx: StateContext<SQLStateModel>, sqlStatus: string) {
+  DeleteAllDataSuccessful(ctx: StateContext<SQLStateModel>, { sqlStatus }: SQLActions.DeleteAllDataSuccessful) {
     const state = ctx.getState();
 
     return ctx.setState({

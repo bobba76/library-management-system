@@ -1,0 +1,31 @@
+<h4>Referens till...</h4>
+
+<button
+  type="button"
+  class="btn btn-sm"
+  (click)="goToSelectedLibraryItem()"
+  [disabled]="selected.length !== 1"
+>
+  <clr-icon shape="pencil"></clr-icon> Ändra
+</button>
+
+<clr-datagrid [(clrDgSelected)]="selected" [clrDgRowSelection]="true">
+  <clr-dg-column [clrDgField]="'id'">Biblioteksobjekt</clr-dg-column>
+
+  <clr-dg-row
+    *clrDgItems="let libraryItem of getLibraryItemReferences() | async"
+    [clrDgItem]="libraryItem"
+  >
+    <clr-dg-cell>{{ libraryItem.id }} - {{ libraryItem.title }}</clr-dg-cell>
+  </clr-dg-row>
+
+  <clr-dg-footer>
+    <clr-dg-pagination #pagination [clrDgPageSize]="10">
+      <clr-dg-page-size [clrPageSizeOptions]="[10, 20, 50, 100]"
+        >Kategori per sida</clr-dg-page-size
+      >
+      {{ pagination.firstItem + 1 }} - {{ pagination.lastItem + 1 }} av
+      {{ pagination.totalItems }} kategorier
+    </clr-dg-pagination>
+  </clr-dg-footer>
+</clr-datagrid>

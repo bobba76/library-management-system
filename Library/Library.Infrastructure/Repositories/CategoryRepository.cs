@@ -2,7 +2,6 @@
 using System.Data.SqlClient;
 using System.Linq.Expressions;
 using Library.Domain.CategoryAggregate;
-using MediatR;
 
 namespace Library.Infrastructure.Repositories;
 
@@ -10,10 +9,6 @@ public class CategoryRepository : SQLRepository<Category>, ICategoryRepository
 {
     private const int IdIndex = 0;
     private const int CategoryNameIndex = 1;
-
-    public CategoryRepository(IMediator mediator) : base(mediator)
-    {
-    }
 
     public override async Task<IEnumerable<Category>> GetAsync(CancellationToken cancellationToken,
         Expression<Func<Category, bool>>? filter = null, Expression<Func<Category, string>>? orderBy = null,

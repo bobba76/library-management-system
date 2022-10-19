@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ClrDatagridComparatorInterface } from '@clr/angular';
 import { Actions, ofActionSuccessful, Select, Store } from '@ngxs/store';
 import { first, mergeMap, Observable, take } from 'rxjs';
 
@@ -100,8 +101,15 @@ export class LibraryBorrowGridComponent implements OnInit {
       )
       .subscribe({
         complete: () => {
-          this.router.navigate(['library'])
+          this.router.navigate(['library']);
         },
       });
+  }
+
+  getAcronym(word: string): string {
+    return word
+      .match(/\b(\w)/g)
+      .join('')
+      .toUpperCase();
   }
 }

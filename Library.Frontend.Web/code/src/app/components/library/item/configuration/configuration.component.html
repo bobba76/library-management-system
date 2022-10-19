@@ -1,0 +1,249 @@
+<div class="content-header">
+  <library-back-button></library-back-button>
+  <h2>{{ getConfigurationModeName(configurationMode) }} Biblioteksobjekt</h2>
+</div>
+
+<div class="progress top loop" [hidden]="!isLoading()">
+  <progress></progress>
+</div>
+
+<div class="content-container" [hidden]="isLoading()">
+  <div class="content-area">
+    <div class="category-container">
+      <div class="clr-row">
+        <div class="clr-col-lg-4">
+          <form (ngSubmit)="submit()" [formGroup]="form" class="clr-form">
+            <div class="card">
+              <div class="card-header">
+                <div class="radio btn">
+                  <input
+                    [autofocus]
+                    type="radio"
+                    name="type"
+                    id="book"
+                    formControlName="type"
+                    (change)="switchedType(LibraryItemTypeEnum.Book)"
+                    [value]="LibraryItemTypeEnum.Book"
+                  />
+                  <label for="book">Bok</label>
+                </div>
+                <div class="radio btn">
+                  <input
+                    [autofocus]
+                    type="radio"
+                    name="type"
+                    id="audioBook"
+                    formControlName="type"
+                    (change)="switchedType(LibraryItemTypeEnum.AudioBook)"
+                    [value]="LibraryItemTypeEnum.AudioBook"
+                  />
+                  <label for="audioBook">Ljudbok</label>
+                </div>
+                <div class="radio btn">
+                  <input
+                    [autofocus]
+                    type="radio"
+                    name="type"
+                    id="dvd"
+                    formControlName="type"
+                    (change)="switchedType(LibraryItemTypeEnum.Dvd)"
+                    [value]="LibraryItemTypeEnum.Dvd"
+                  />
+                  <label for="dvd">DVD</label>
+                </div>
+                <div class="radio btn">
+                  <input
+                    [autofocus]
+                    type="radio"
+                    name="type"
+                    id="referenceBook"
+                    formControlName="type"
+                    (change)="switchedType(LibraryItemTypeEnum.ReferenceBook)"
+                    [value]="LibraryItemTypeEnum.ReferenceBook"
+                  />
+                  <label for="referenceBook">Referensbok</label>
+                </div>
+              </div>
+
+              <div
+                *ngIf="
+                  configurationMode === ConfigurationModeEnum.Create ||
+                  (configurationMode === ConfigurationModeEnum.Edit &&
+                    (libraryItem$ | async))
+                "
+              >
+                <!-- Show form if atleast 1 Category exists -->
+                <div
+                  *ngIf="
+                    (categories$ | async)?.length > 0;
+                    then formCard;
+                    else noCategoriesExist
+                  "
+                ></div>
+              </div>
+
+              <ng-template #formCard>
+                <div class="card-block">
+                  <!-- #region General -->
+                  <clr-select-container>
+                    <label for="categoryId" class="clr-col-12 required"
+                      >Kategori</label
+                    >
+                    <select
+                      clrSelect
+                      formControlName="categoryId"
+                      class="clr-col-12"
+                    >
+                      <option hidden></option>
+                      <option
+                        *ngFor="let category of categories$ | async"
+                        [ngValue]="category.id"
+                      >
+                        {{ category.categoryName }}
+                      </option>
+                    </select>
+                  </clr-select-container>
+
+                  <clr-input-container>
+                    <label for="title" class="clr-col-12 required">Titel</label>
+                    <input
+                      name="title"
+                      id="title"
+                      formControlName="title"
+                      required
+                      clrInput
+                      type="text"
+                      class="clr-col-12"
+                    />
+                    <clr-control-error *clrIfError="'required'"
+                      >Detta fält är obligatoriskt.</clr-control-error
+                    >
+                  </clr-input-container>
+                  <!-- #endregion -->
+
+                  <div
+                    *ngIf="
+                      typeOfBookChosen() === true;
+                      then typeOfBookChosenTemplate;
+                      else typeOfMediaChosenTemplate
+                    "
+                  ></div>
+
+                  <!-- #region Book -->
+                  <ng-template #typeOfBookChosenTemplate>
+                    <clr-input-container>
+                      <label for="author" class="clr-col-12 required"
+                        >Författare</label
+                      >
+                      <input
+                        name="author"
+                        id="author"
+                        formControlName="author"
+                        required
+                        clrInput
+                        type="text"
+                        class="clr-col-12"
+                      />
+                      <clr-control-error *clrIfError="'required'"
+                        >Detta fält är obligatoriskt.</clr-control-error
+                      >
+                    </clr-input-container>
+
+                    <clr-input-container>
+                      <label for="pages" class="clr-col-12 required"
+                        >Antal sidor</label
+                      >
+                      <input
+                        name="pages"
+                        id="pages"
+                        formControlName="pages"
+                        clrInput
+                        min="1"
+                        type="number"
+                        class="clr-col-12"
+                      />
+                      <clr-control-helper
+                        >Ett heltal över 0.</clr-control-helper
+                      >
+                      <clr-control-error *clrIfError="'required'">
+                        Detta fält är obligatoriskt.
+                      </clr-control-error>
+                      <clr-control-error *clrIfError="'min'">
+                        Antal sidor måste vara ett heltal över 0.
+                      </clr-control-error>
+                      <clr-control-error *clrIfError="'pattern'">
+                        Nummer endast.
+                      </clr-control-error>
+                    </clr-input-container>
+                  </ng-template>
+                  <!-- #endregion -->
+
+                  <!-- #region Media -->
+                  <ng-template #typeOfMediaChosenTemplate>
+                    <clr-input-container>
+                      <label for="runTimeMinutes" class="clr-col-12 required"
+                        >Längd i minuter</label
+                      >
+                      <input
+                        name="runTimeMinutes"
+                        id="runTimeMinutes"
+                        formControlName="runTimeMinutes"
+                        clrInput
+                        min="1"
+                        type="number"
+                        class="clr-col-12"
+                      />
+                      <clr-control-helper
+                        >Ett heltal över 0.</clr-control-helper
+                      >
+                      <clr-control-error *clrIfError="'required'">
+                        Detta fält är obligatoriskt.
+                      </clr-control-error>
+                      <clr-control-error *clrIfError="'min'">
+                        Antal sidor måste vara ett heltal över 0.
+                      </clr-control-error>
+                      <clr-control-error *clrIfError="'pattern'">
+                        Nummer endast.
+                      </clr-control-error>
+                    </clr-input-container>
+                  </ng-template>
+                  <!--#endregion -->
+                </div>
+
+                <div class="card-footer">
+                  <div class="space-top">
+                    <button
+                      [clrLoading]="submitIsLoading()"
+                      type="submit"
+                      class="btn btn-primary"
+                      [disabled]="formIsInvalid()"
+                    >
+                      {{
+                        configurationMode === ConfigurationModeEnum.Create
+                          ? "Skapa"
+                          : "Ändra"
+                      }}
+                    </button>
+                    <button type="button" class="btn" (click)="cancel()">
+                      Avbryt
+                    </button>
+                  </div>
+                </div>
+              </ng-template>
+
+              <ng-template #noCategoriesExist>
+                <div class="card-block">
+                  <h4 class="card-title">Ingen kategori existerar.</h4>
+                  <div class="card-text">
+                    Alla biblioteksobjekt behöver ha en kategori. Skapa en
+                    kategori först.
+                  </div>
+                </div>
+              </ng-template>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

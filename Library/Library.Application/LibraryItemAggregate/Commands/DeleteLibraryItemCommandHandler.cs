@@ -17,6 +17,13 @@ public class DeleteLibraryItemCommandHandler : IRequestHandler<DeleteLibraryItem
     {
         var libraryItem = await _libraryItemRepository.GetByIdAsync(request.Id, cancellationToken);
 
+        if (libraryItem.BorrowDate is not null &&
+            libraryItem.Borrower is not null
+           )
+            throw new ArgumentException(
+                $"The Library Item cannot be deleted while being borrowed. Please return the item before deleting it. (Parameter '{nameof(libraryItem.Borrower)}, Value '{libraryItem.Borrower}', Parameter '{nameof(libraryItem.BorrowDate)}, Value '{libraryItem.BorrowDate}')");
+
+
         await _libraryItemRepository.DeleteAsync(libraryItem, cancellationToken);
 
         return await _libraryItemRepository.GetAsync(cancellationToken);

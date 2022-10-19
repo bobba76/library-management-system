@@ -1,11 +1,21 @@
 export namespace SQLActions {
+  export class UpdateConnectionString {
+    static readonly type = '[SQL API] Update Connection String';
+    constructor(public inputModel: { connectionString: string }) {}
+  }
+
+  export class UpdateConnectionStringSuccessful {
+    static readonly type = '[SQL API] Update Connection String Successful';
+    constructor(public sqlStatus: string) {}
+  }
+
   export class ResetData {
     static readonly type = '[SQL API] Reset Data';
   }
 
   export class ResetDataSuccessful {
     static readonly type = '[SQL API] Reset Data Successful';
-    constructor(sqlStatus: string) {}
+    constructor(public sqlStatus: string) {}
   }
 
   export class ResetDataFailed {
@@ -18,7 +28,7 @@ export namespace SQLActions {
 
   export class DeleteAllDataSuccessful {
     static readonly type = '[SQL API] Delete Data Successful';
-    constructor(sqlStatus: string) {}
+    constructor(public sqlStatus: string) {}
   }
 
   export class DeleteAllDataFailed {

@@ -60,20 +60,22 @@ export class ConfigurationManagerToGridComponent {
   }
 
   refreshComponentOnUpdate(): void {
-    const id = parseInt(this.route.snapshot.paramMap.get('id'));
-
     this.actions$
       .pipe(
         ofActionSuccessful(
           EmployeeActions.UpdateSuccessful
         )
       )
-      .subscribe(() => this.redirectTo('employee/' + id.toString()));
+      .subscribe(() => this.refresh());
   }
 
   redirectTo(uri: string) {
     this.router
       .navigateByUrl('/', { skipLocationChange: true })
       .then(() => this.router.navigate([uri]));
+  }
+
+  refresh() {
+    location.reload();
   }
 }

@@ -92,7 +92,7 @@
                       required
                       clrInput
                       type="text"
-                      class="clr-col-12 clr-col-sm-6 clr-col-lg-3"
+                      class="clr-col-12"
                     />
                     <clr-control-error *clrIfError="'required'"
                       >Detta fält är obligatoriskt.</clr-control-error
@@ -110,7 +110,7 @@
                       required
                       clrInput
                       type="text"
-                      class="clr-col-12 clr-col-sm-6 clr-col-lg-3"
+                      class="clr-col-12"
                     />
                     <clr-control-error *clrIfError="'required'"
                       >Detta fält är obligatoriskt.</clr-control-error
@@ -118,7 +118,7 @@
                   </clr-input-container>
                   <!-- #endregion -->
 
-                  <!-- #region Lön -->
+                  <!-- #region Salary -->
                   <clr-input-container>
                     <label for="salary" class="clr-col-12 required">Lön</label>
                     <input
@@ -208,7 +208,7 @@
                 <div class="card-footer">
                   <div class="space-top">
                     <button
-                      [clrLoading]="submitBtnState"
+                      [clrLoading]="submitIsLoading()"
                       type="submit"
                       class="btn btn-primary"
                       [disabled]="formIsInvalid()"

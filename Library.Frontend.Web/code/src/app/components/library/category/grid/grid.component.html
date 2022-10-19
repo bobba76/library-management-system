@@ -1,0 +1,58 @@
+<button
+  type="button"
+  class="btn btn-sm btn-primary"
+  (click)="createNewCategory()"
+>
+  <clr-icon shape="plus"></clr-icon> Ny
+</button>
+
+<button
+  type="button"
+  class="btn btn-sm"
+  (click)="editSelectedCategory()"
+  [disabled]="selected.length !== 1"
+>
+  <clr-icon shape="pencil"></clr-icon> Ändra
+</button>
+
+<button
+  type="button"
+  class="btn btn-sm"
+  (click)="deleteSelectedCategories()"
+  [disabled]="selected.length === 0 || (libraryItemReferencesExists(this.selected) | async)?.length !== 0"
+>
+  <clr-icon shape="times"></clr-icon> Ta bort
+</button>
+
+<clr-datagrid [(clrDgSelected)]="selected" [clrDgRowSelection]="true">
+  <clr-dg-column class="datagrid-fixed-width width-fix-4" [clrDgField]="'id'"
+    >ID</clr-dg-column
+  >
+  <clr-dg-column class="datagrid-fixed-width width-fix-4"
+    >Referenser</clr-dg-column
+  >
+  <clr-dg-column [clrDgField]="'categoryName'">Kategori</clr-dg-column>
+
+  <clr-dg-row
+    *clrDgItems="let category of categories$ | async"
+    [clrDgItem]="category"
+  >
+    <clr-dg-cell class="datagrid-fixed-width width-fix-4">{{
+      category.id
+    }}</clr-dg-cell>
+    <clr-dg-cell class="datagrid-fixed-width width-fix-4">{{
+      (getLibraryItemReferences(category.id) | async)?.length
+    }}</clr-dg-cell>
+    <clr-dg-cell>{{ category.categoryName }}</clr-dg-cell>
+  </clr-dg-row>
+
+  <clr-dg-footer>
+    <clr-dg-pagination #pagination [clrDgPageSize]="10">
+      <clr-dg-page-size [clrPageSizeOptions]="[10, 20, 50, 100]"
+        >Biblioteksobjekt per sida</clr-dg-page-size
+      >
+      {{ pagination.firstItem + 1 }} - {{ pagination.lastItem + 1 }} av
+      {{ pagination.totalItems }} biblioteksobjekt
+    </clr-dg-pagination>
+  </clr-dg-footer>
+</clr-datagrid>

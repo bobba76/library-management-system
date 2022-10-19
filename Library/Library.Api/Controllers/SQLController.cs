@@ -6,11 +6,11 @@ namespace Library.Api.Controllers;
 public class SQLController : ApiController
 {
     [HttpPut]
-    [Route("setup/connection-string/{connectionString}")]
+    [Route("setup/connection-string")]
     [Produces("application/json")]
-    public string UpdateConnectionString(string connectionString)
+    public string UpdateConnectionString([FromBody] UpdateConnectionStringInputModel inputModel)
     {
-        return DB.UpdateConnectionString(connectionString);
+        return DB.UpdateConnectionString(inputModel.ConnectionString);
     }
 
     [HttpPost]
@@ -36,4 +36,9 @@ public class SQLController : ApiController
     {
         return DB.RemoveData();
     }
+}
+
+public class UpdateConnectionStringInputModel
+{
+    public string ConnectionString { get; set; }
 }

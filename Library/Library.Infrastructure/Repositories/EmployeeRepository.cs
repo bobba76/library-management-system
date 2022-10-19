@@ -2,7 +2,6 @@
 using System.Data.SqlClient;
 using System.Linq.Expressions;
 using Library.Domain.EmployeeAggregate;
-using MediatR;
 
 namespace Library.Infrastructure.Repositories;
 
@@ -14,10 +13,6 @@ public class EmployeeRepository : SQLRepository<EmployeeBase>, IEmployeeReposito
     private const int SalaryIndex = 3;
     private const int RoleIndex = 4;
     private const int ManagerIdIndex = 5;
-
-    public EmployeeRepository(IMediator mediator) : base(mediator)
-    {
-    }
 
     public override async Task<IEnumerable<EmployeeBase>> GetAsync(CancellationToken cancellationToken,
         Expression<Func<EmployeeBase, bool>>? filter = null, Expression<Func<EmployeeBase, string>>? orderBy = null,

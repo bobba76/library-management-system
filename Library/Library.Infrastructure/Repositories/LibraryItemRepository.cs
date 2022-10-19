@@ -2,7 +2,6 @@
 using System.Data.SqlClient;
 using System.Linq.Expressions;
 using Library.Domain.LibraryItemAggregate;
-using MediatR;
 
 namespace Library.Infrastructure.Repositories;
 
@@ -18,10 +17,6 @@ public class LibraryItemRepository : SQLRepository<LibraryItem>, ILibraryItemRep
     private const int BorrowerIndex = 7;
     private const int BorrowDateIndex = 8;
     private const int TypeIndex = 9;
-
-    public LibraryItemRepository(IMediator mediator) : base(mediator)
-    {
-    }
 
     public override async Task<IEnumerable<LibraryItem>> GetAsync(CancellationToken cancellationToken,
         Expression<Func<LibraryItem, bool>>? filter = null, Expression<Func<LibraryItem, string>>? orderBy = null,
@@ -165,9 +160,9 @@ public class LibraryItemRepository : SQLRepository<LibraryItem>, ILibraryItemRep
             SET
             category_id = COALESCE(@categoryId, category_id),
             title = COALESCE(@title, title),
-            author = COALESCE(@author, author),
-            pages = COALESCE(@pages, pages),
-            run_time_minutes = COALESCE(@runTimeMinutes, run_time_minutes),
+            author = @author,
+            pages = @pages,
+            run_time_minutes = @runTimeMinutes,
             is_borrowable = COALESCE(@isBorrowable, is_borrowable),
             borrower = @borrower,
             borrow_date = @borrowDate,

@@ -116,7 +116,6 @@ export class EmployeeConfigurationComponent implements OnInit, OnDestroy {
             next: () => {
               this.employee$.pipe(first()).subscribe({
                 next: (employee) => {
-                  // TODO: Checka om jag ska använda first eller take1
                   this.employee = employee;
                   this.updateFormValues();
                 },
@@ -267,6 +266,9 @@ export class EmployeeConfigurationComponent implements OnInit, OnDestroy {
   // #region Others
   isLoading(): boolean {
     return this.loadingState === ClrLoadingState.LOADING;
+  }
+  submitIsLoading(): boolean {
+    return this.submitBtnState === ClrLoadingState.LOADING;
   }
 
   switchedRole(role: EmployeeRole): void {

@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
@@ -10,6 +10,17 @@ export class SQLService {
   url = `${environment.envApiBaseUrl}/${EndPointController.sql}`;
 
   constructor(private http: HttpClient) {}
+
+  updateConnectionString(inputModel: {
+    connectionString: string;
+  }): Observable<string> {
+    const route = `/setup/connection-string`;
+    const url = this.url + route;
+
+    return this.http.put<string>(url, inputModel, {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
+    });
+  }
 
   resetData(): Observable<string> {
     const route = `/setup`;

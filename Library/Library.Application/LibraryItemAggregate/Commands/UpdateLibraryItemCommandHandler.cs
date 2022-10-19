@@ -23,6 +23,8 @@ public class UpdateLibraryItemCommandHandler : IRequestHandler<UpdateLibraryItem
     public async Task<LibraryItem> Handle(UpdateLibraryItemCommand request,
         CancellationToken cancellationToken)
     {
+        var oldLibraryItem = await _libraryItemRepository.GetByIdAsync(request.Id, cancellationToken);
+
         if (request.CategoryId is not null)
         {
             var categories = await _categoryRepository.GetAsync(cancellationToken);
@@ -39,14 +41,25 @@ public class UpdateLibraryItemCommandHandler : IRequestHandler<UpdateLibraryItem
             throw new ArgumentException(
                 $"To borrow a book, both {nameof(request.Borrower)} and {nameof(request.BorrowDate)} must have a value. (Parameter '{nameof(request.Borrower)}, Value '{request.Borrower}', Parameter '{nameof(request.BorrowDate)}, Value '{request.BorrowDate}')");
 
-        if (request.Type is null)
-        {
-            var oldLibraryItem = await _libraryItemRepository.GetByIdAsync(request.Id, cancellationToken);
+        if (oldLibraryItem.BorrowDate is not null &&
+            oldLibraryItem.Borrower is not null &&
+            (
+                request.Pages is not null ||
+                request.RunTimeMinutes is not null ||
+                request.CategoryId is not null ||
+                request.Type is not null ||
+                request.Author is not null ||
+                request.Title is not null
+            )
+           )
+            throw new ArgumentException(
+                $"The Library Item cannot be modified while being borrowed. Please return the item before updating it. (Parameter '{nameof(oldLibraryItem.Borrower)}, Value '{oldLibraryItem.Borrower}', Parameter '{nameof(oldLibraryItem.BorrowDate)}, Value '{oldLibraryItem.BorrowDate}')");
 
-            // Keeping Type if null
-            request.Type ??= oldLibraryItem.Type;
-        }
-
+        // Keeping Type if null
+        request.Type ??= oldLibraryItem.Type;
+        request.Author ??= oldLibraryItem.Author;
+        request.Pages ??= oldLibraryItem.Pages;
+        request.RunTimeMinutes ??= oldLibraryItem.RunTimeMinutes;
 
         var libraryItem = UpdateLibraryItemBasedOfType(_mapper.Map<UpdateLibraryItemParameters>(request));
 

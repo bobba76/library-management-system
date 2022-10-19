@@ -10,11 +10,24 @@ import { SQLActions } from '@services/sql/sql.action';
   styleUrls: ['./menu-bar.component.scss'],
 })
 export class MenuBarComponent {
-  constructor(
-    private store: Store,
-    private router: Router,
-    private actions$: Actions
-  ) {}
+  constructor(private store: Store, private actions$: Actions) {}
+
+  updateConnectionString(): void {
+    let connectionString = prompt('Ange connection-string:');
+
+    if (connectionString) {
+      const inputModel: { connectionString: string } = {
+        connectionString,
+      };
+
+      this.store.dispatch(new SQLActions.UpdateConnectionString(inputModel));
+
+      // Refresh the application.
+      this.refreshOnSuccess(SQLActions.UpdateConnectionStringSuccessful);
+    } else {
+      alert('Ändringen avbröts.');
+    }
+  }
 
   deleteAllData(): void {
     this.store.dispatch(new SQLActions.DeleteAllData());
@@ -32,13 +45,11 @@ export class MenuBarComponent {
 
   refreshOnSuccess(action: ActionType): void {
     this.actions$.pipe(ofActionSuccessful(action)).subscribe(() => {
-      this.redirectTo(this.router.url);
+      this.refresh();
     });
   }
 
-  redirectTo(uri: string) {
-    this.router
-      .navigateByUrl('/', { skipLocationChange: true })
-      .then(() => this.router.navigate([uri]));
+  refresh() {
+    location.reload();
   }
 }

@@ -16,14 +16,14 @@ const routes: Routes = [
   {
     path: ':id',
     component: EmployeeConfigurationComponent,
-  }
+  },
 ];
 
 const components = [
   EmployeeComponent,
   EmployeeConfigurationComponent,
   EmployeeGridComponent,
-  ConfigurationManagerToGridComponent
+  ConfigurationManagerToGridComponent,
 ];
 
 @NgModule({

@@ -1,5 +1,4 @@
 import { Component, OnDestroy } from '@angular/core';
-import { ClrLoadingState } from '@clr/angular';
 import { Store } from '@ngxs/store';
 
 import { CategoryActions } from '@services/category/category.action';

@@ -1,5 +1,4 @@
-﻿using System.ComponentModel;
-using Library.Domain.CategoryAggregate;
+﻿using Library.Domain.CategoryAggregate;
 using Library.SharedKernel.Interfaces;
 
 namespace Library.Application.CategoryAggregate.Queries;

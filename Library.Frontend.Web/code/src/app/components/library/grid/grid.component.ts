@@ -65,4 +65,8 @@ export class LibraryGridComponent implements OnInit {
 
     return categoryName;
   }
+
+  getAcronym(word: string): string {
+    return word.match(/\b(\w)/g).join('').toUpperCase();
+  }
 }

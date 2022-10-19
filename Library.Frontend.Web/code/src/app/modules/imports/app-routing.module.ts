@@ -2,7 +2,7 @@ import { RouterModule, Routes } from '@angular/router';
 
 // Lazy loading modules
 const routes: Routes = [
-  { path: '', redirectTo: '/library', pathMatch: 'full' },
+  { path: '', redirectTo: 'library', pathMatch: 'full' },
   {
     path: 'library',
     loadChildren: () =>
@@ -19,7 +19,7 @@ const routes: Routes = [
   },
   {
     path: '**',
-    redirectTo: '',
+    redirectTo: 'library',
   },
 ];
 

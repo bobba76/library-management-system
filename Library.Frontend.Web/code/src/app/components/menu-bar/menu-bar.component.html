@@ -1,7 +1,7 @@
-<clr-header>
+<clr-header class="header-6">
   <div class="branding">
     <a routerLink="" class="nav-link">
-      <clr-icon shape="library" class="is-solid"></clr-icon>
+      <clr-icon shape="library" style="color: white"></clr-icon>
       <span class="title">Stadsbiblioteket</span>
     </a>
   </div>
@@ -24,6 +24,7 @@
         <clr-icon shape="angle down"></clr-icon>
       </button>
       <clr-dropdown-menu *clrIfOpen clrPosition="bottom-right">
+        <a (click)="updateConnectionString()" clrDropdownItem>Ändra Connection String</a>
         <a (click)="resetData()" clrDropdownItem>Återställ data</a>
         <a (click)="deleteAllData()" clrDropdownItem>Rensa data</a>
       </clr-dropdown-menu>

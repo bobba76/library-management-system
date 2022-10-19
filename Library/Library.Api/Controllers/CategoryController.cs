@@ -32,7 +32,7 @@ public class CategoryController : ApiController
     [Produces("application/json")]
     public async Task<CategoryVm> GetCategory(int id)
     {
-        var category = await _mediator.Send(new GetCategoryQuery { Id = id });
+        var category = await _mediator.Send(new GetCategoryQuery {Id = id});
 
         return _mapper.Map<CategoryVm>(category);
     }
@@ -66,7 +66,7 @@ public class CategoryController : ApiController
     [Produces("application/json")]
     public async Task<IEnumerable<CategoryVm>> DeleteCategory(int id)
     {
-        var libraryItems = await _mediator.Send(new DeleteCategoryCommand { Id = id });
+        var libraryItems = await _mediator.Send(new DeleteCategoryCommand {Id = id});
 
         return _mapper.Map<IEnumerable<CategoryVm>>(libraryItems);
     }

@@ -12,10 +12,31 @@ const routes: Routes = [
     component: LibraryComponent,
   },
   {
+    path: 'library-item',
+    loadChildren: () =>
+      import('../../components/library/item/item.module').then(
+        (m) => m.LibraryItemModule
+      ),
+  },
+  {
+    path: 'category',
+    loadChildren: () =>
+      import('../../components/library/category/category.module').then(
+        (m) => m.CategoryModule
+      ),
+  },
+  {
     path: 'borrow',
     loadChildren: () =>
       import('../../components/library/borrow/borrow.module').then(
         (m) => m.LibraryBorrowModule
+      ),
+  },
+  {
+    path: 'return',
+    loadChildren: () =>
+      import('../../components/library/return/return.module').then(
+        (m) => m.LibraryReturnModule
       ),
   },
 ];

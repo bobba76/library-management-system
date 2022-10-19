@@ -9,7 +9,8 @@ public class DeleteCategoryCommandHandler : IRequestHandler<DeleteCategoryComman
     private readonly ICategoryRepository _categoryRepository;
     private readonly ILibraryItemRepository _libraryItemRepository;
 
-    public DeleteCategoryCommandHandler(ICategoryRepository categoryRepository, ILibraryItemRepository libraryItemRepository)
+    public DeleteCategoryCommandHandler(ICategoryRepository categoryRepository,
+        ILibraryItemRepository libraryItemRepository)
     {
         _categoryRepository = categoryRepository;
         _libraryItemRepository = libraryItemRepository;

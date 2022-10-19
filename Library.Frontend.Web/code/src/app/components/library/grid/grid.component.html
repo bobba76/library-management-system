@@ -1,6 +1,7 @@
 <clr-datagrid>
   <clr-dg-column [clrDgField]="'title'">Titel</clr-dg-column>
-  <clr-dg-column [clrDgField]="'categoryId'">Kategori</clr-dg-column>
+  <!-- Should sort on CategoryId, but we want to be able to sort on CategoryName, so removed for now -->
+  <clr-dg-column>Kategori</clr-dg-column>
   <clr-dg-column [clrDgField]="'type'">Typ</clr-dg-column>
   <clr-dg-column [clrDgField]="'author'">
     <ng-container *clrDgHideableColumn="{ hidden: false }">
@@ -29,7 +30,7 @@
   </clr-dg-column>
   <clr-dg-column
     [clrDgField]="'isBorrowable'"
-    class="datagrid-fixed-width width-fix-4"
+    class="datagrid-fixed-width width-fix-5"
     >Lånbar</clr-dg-column
   >
 
@@ -37,7 +38,7 @@
     *clrDgItems="let libraryItem of libraryItems$ | async"
     [clrDgItem]="libraryItem"
   >
-    <clr-dg-cell>{{ libraryItem.title }}</clr-dg-cell>
+    <clr-dg-cell>({{ getAcronym(libraryItem.title) }}) {{ libraryItem.title }}</clr-dg-cell>
     <clr-dg-cell>{{ getCategoryName(libraryItem.categoryId) }}</clr-dg-cell>
     <clr-dg-cell>{{ getLibraryItemTypeName(libraryItem.type) }}</clr-dg-cell>
     <clr-dg-cell>{{ libraryItem.author }}</clr-dg-cell>
@@ -46,7 +47,7 @@
     <clr-dg-cell>{{ libraryItem.borrower }}</clr-dg-cell>
     <clr-dg-cell>{{ libraryItem.borrowDate | date: 'yyyy-MM-dd' }}</clr-dg-cell>
 
-    <clr-dg-cell class="datagrid-fixed-width width-fix-4 center-text-h">
+    <clr-dg-cell class="center-text-h">
       <clr-icon
         shape="check"
         style="color: green"

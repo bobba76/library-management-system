@@ -1,0 +1,81 @@
+<div class="content-header">
+  <library-back-button></library-back-button>
+  <h2>{{ getConfigurationModeName(configurationMode) }} Kategori</h2>
+</div>
+
+<div class="progress top loop" [hidden]="!isLoading()">
+  <progress></progress>
+</div>
+
+<div class="content-container" [hidden]="isLoading()">
+  <div class="content-area">
+    <div class="category-container">
+      <div class="clr-row">
+        <div class="clr-col-lg-4">
+          <form (ngSubmit)="submit()" [formGroup]="form" class="clr-form">
+            <div class="card">
+              <!-- Show form if atleast 1 Category exists -->
+              <div
+                *ngIf="
+                  configurationMode === ConfigurationModeEnum.Create ||
+                    (configurationMode === ConfigurationModeEnum.Edit &&
+                      (category$ | async));
+                  then formCard
+                "
+              ></div>
+
+              <ng-template #formCard>
+                <div class="card-block">
+                  <!-- #region General -->
+                  <clr-input-container>
+                    <label for="categoryName" class="clr-col-12 required"
+                      >Namn</label
+                    >
+                    <input
+                      name="categoryName"
+                      id="categoryName"
+                      formControlName="categoryName"
+                      required
+                      clrInput
+                      type="text"
+                      class="clr-col-12"
+                    />
+                    <clr-control-error *clrIfError="'required'"
+                      >Detta fält är obligatoriskt.</clr-control-error
+                    >
+                  </clr-input-container>
+                  <!--#endregion -->
+                </div>
+
+                <div class="card-footer">
+                  <div class="space-top">
+                    <button
+                      [clrLoading]="submitIsLoading()"
+                      type="submit"
+                      class="btn btn-primary"
+                      [disabled]="formIsInvalid()"
+                    >
+                      {{
+                        configurationMode === ConfigurationModeEnum.Create
+                          ? "Skapa"
+                          : "Ändra"
+                      }}
+                    </button>
+                    <button type="button" class="btn" (click)="cancel()">
+                      Avbryt
+                    </button>
+                  </div>
+                </div>
+              </ng-template>
+            </div>
+          </form>
+        </div>
+        <div class="clr-col-lg-4">
+          <configuration-reference-grid
+            [hidden]="!isEditMode()"
+          ></configuration-reference-grid>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
