@@ -4,7 +4,7 @@ import { Action, Selector, State, StateContext } from '@ngxs/store';
 import {
   EmployeeModel,
   EmployeeRole,
-  employeeRoleName
+  employeeRoleName,
 } from '@models/employee/employee.model';
 import { first, tap } from 'rxjs';
 import { SQLActions } from './sql.action';
@@ -72,7 +72,10 @@ export class SQLState {
   }
 
   @Action(SQLActions.ResetDataSuccessful)
-  ResetDataSuccessful(ctx: StateContext<SQLStateModel>, { sqlStatus }: SQLActions.ResetDataSuccessful) {
+  ResetDataSuccessful(
+    ctx: StateContext<SQLStateModel>,
+    { sqlStatus }: SQLActions.ResetDataSuccessful
+  ) {
     const state = ctx.getState();
 
     return ctx.setState({
@@ -94,7 +97,10 @@ export class SQLState {
   }
 
   @Action(SQLActions.DeleteAllDataSuccessful)
-  DeleteAllDataSuccessful(ctx: StateContext<SQLStateModel>, { sqlStatus }: SQLActions.DeleteAllDataSuccessful) {
+  DeleteAllDataSuccessful(
+    ctx: StateContext<SQLStateModel>,
+    { sqlStatus }: SQLActions.DeleteAllDataSuccessful
+  ) {
     const state = ctx.getState();
 
     return ctx.setState({

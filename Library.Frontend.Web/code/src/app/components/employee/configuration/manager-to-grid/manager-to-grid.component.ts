@@ -6,7 +6,7 @@ import { map, Observable } from 'rxjs';
 import {
   EmployeeModel,
   EmployeeRole,
-  employeeRoleName
+  employeeRoleName,
 } from '@models/employee/employee.model';
 import { EmployeeActions } from '@services/employee/employee.action';
 import { EmployeeState } from '@services/employee/employee.state';
@@ -50,8 +50,8 @@ export class ConfigurationManagerToGridComponent {
   }
 
   deleteSelectedReferences(): void {
-    this.refreshComponentOnUpdate(); 
-    
+    this.refreshComponentOnUpdate();
+
     for (const employee of this.selected) {
       this.store.dispatch(
         new EmployeeActions.Update(employee.id, { managerId: null })
@@ -61,11 +61,7 @@ export class ConfigurationManagerToGridComponent {
 
   refreshComponentOnUpdate(): void {
     this.actions$
-      .pipe(
-        ofActionSuccessful(
-          EmployeeActions.UpdateSuccessful
-        )
-      )
+      .pipe(ofActionSuccessful(EmployeeActions.UpdateSuccessful))
       .subscribe(() => this.refresh());
   }
 

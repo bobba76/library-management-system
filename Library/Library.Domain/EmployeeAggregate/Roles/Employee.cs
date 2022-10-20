@@ -19,7 +19,7 @@ public class Employee : EmployeeBase
     private static Employee Create(string firstName, string lastName,
         int salary, int? managerId)
     {
-        if (managerId.GetValueOrDefault(0) == 0)
+        if (managerId is null)
             throw new ArgumentException(
                 $"Value cannot be null. {EmployeeRole.Employee} must have a {EmployeeRole.Manager}. (Parameter '{nameof(managerId)}')");
 
@@ -50,7 +50,7 @@ public class Employee : EmployeeBase
 
     private static Employee Update(int id, string? firstName, string? lastName, int salary, int? managerId)
     {
-        if (managerId.GetValueOrDefault(0) == 0)
+        if (managerId is null)
             throw new ArgumentException(
                 $"Value cannot be null. {EmployeeRole.Employee} must have a {EmployeeRole.Manager}. (Parameter '{nameof(managerId)}')");
 
@@ -63,10 +63,10 @@ public class Employee : EmployeeBase
         };
 
         if (firstName is not null)
-            employee.FirstName = firstName.Trim();
+            employee.FirstName = firstName;
 
         if (lastName is not null)
-            employee.LastName = lastName.Trim();
+            employee.LastName = lastName;
 
         return employee;
     }

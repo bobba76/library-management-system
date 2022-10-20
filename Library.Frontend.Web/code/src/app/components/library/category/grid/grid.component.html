@@ -19,7 +19,10 @@
   type="button"
   class="btn btn-sm"
   (click)="deleteSelectedCategories()"
-  [disabled]="selected.length === 0 || (libraryItemReferencesExists(this.selected) | async)?.length !== 0"
+  [disabled]="
+    selected.length === 0 ||
+    (libraryItemReferencesExists(this.selected) | async)?.length !== 0
+  "
 >
   <clr-icon shape="times"></clr-icon> Ta bort
 </button>

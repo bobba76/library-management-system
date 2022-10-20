@@ -25,7 +25,9 @@
 </button>
 
 <clr-datagrid [(clrDgSelected)]="selected" [clrDgRowSelection]="true">
-  <clr-dg-column class="datagrid-fixed-width width-fix-4" [clrDgField]="'id'">ID</clr-dg-column>
+  <clr-dg-column class="datagrid-fixed-width width-fix-4" [clrDgField]="'id'"
+    >ID</clr-dg-column
+  >
   <clr-dg-column [clrDgField]="'firstName'">Förnamn</clr-dg-column>
   <clr-dg-column [clrDgField]="'lastName'">Efternamn</clr-dg-column>
   <clr-dg-column [clrDgField]="'role'">Roll</clr-dg-column>
@@ -36,12 +38,17 @@
     *clrDgItems="let employee of employees$ | async"
     [clrDgItem]="employee"
   >
-    <clr-dg-cell class="datagrid-fixed-width width-fix-4">{{ employee.id }}</clr-dg-cell>
+    <clr-dg-cell class="datagrid-fixed-width width-fix-4">{{
+      employee.id
+    }}</clr-dg-cell>
     <clr-dg-cell>{{ employee.firstName }}</clr-dg-cell>
     <clr-dg-cell>{{ employee.lastName }}</clr-dg-cell>
     <clr-dg-cell>{{ getEmployeeRoleName(employee.role) }}</clr-dg-cell>
     <clr-dg-cell>{{ employee.salary }}</clr-dg-cell>
-    <clr-dg-cell *ngIf="employee.managerId > 0">{{ employee.managerId }} - {{ getManagerName(employee.managerId) }}</clr-dg-cell>
+    <clr-dg-cell *ngIf="employee.managerId > 0"
+      >{{ employee.managerId }} -
+      {{ getManagerName(employee.managerId) }}</clr-dg-cell
+    >
     <clr-dg-cell *ngIf="employee.managerId < 1"></clr-dg-cell>
   </clr-dg-row>
 

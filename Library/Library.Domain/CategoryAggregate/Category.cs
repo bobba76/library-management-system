@@ -15,9 +15,9 @@ public class Category : Entity
 
     private static Category Create(string categoryName)
     {
-        if (categoryName.Trim().Length is < 1 or > 64)
+        if (categoryName.Length is < 1 or > 64)
             throw new ArgumentException(
-                $"Value must be between 1 - 64 characters. (Parameter '{nameof(categoryName)}', Value '{categoryName.Trim()}')");
+                $"Value must be between 1 - 64 characters. (Parameter '{nameof(categoryName)}', Value '{categoryName}')");
 
         Category category = new()
         {
@@ -30,18 +30,20 @@ public class Category : Entity
     public static Category Update(UpdateCategoryParameters parameters)
     {
         return Update(
+            parameters.Id,
             parameters.CategoryName
         );
     }
 
-    private static Category Update(string categoryName)
+    private static Category Update(int id, string categoryName)
     {
-        if (categoryName.Trim().Length is < 1 or > 64)
+        if (categoryName.Length is < 1 or > 64)
             throw new ArgumentException(
-                $"Value must be between 1 - 64 characters. (Parameter '{nameof(categoryName)}', Value '{categoryName.Trim()}')");
+                $"Value must be between 1 - 64 characters. (Parameter '{nameof(categoryName)}', Value '{categoryName}')");
 
         Category category = new()
         {
+            Id = id,
             CategoryName = categoryName
         };
 

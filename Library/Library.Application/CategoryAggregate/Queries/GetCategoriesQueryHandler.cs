@@ -22,11 +22,13 @@ public class GetCategoriesQueryHandler : IRequestHandler<GetCategoriesQuery, IEn
         foreach (var property in typeof(Category).GetProperties())
         {
             // Find if any property name is matching with Filter input
-            if (!string.IsNullOrWhiteSpace(request.FilterProperty) && request.FilterProperty.Equals(property.Name))
+            if (request.FilterProperty is not null && string.Equals(request.FilterProperty, property.Name,
+                    StringComparison.OrdinalIgnoreCase))
                 filter = f => GetPropValue(f, property.Name).Equals(request.FilterValue);
 
             // Find if any property name is matching with OrderBy input
-            if (!string.IsNullOrWhiteSpace(request.OrderBy) && request.OrderBy.Equals(property.Name))
+            if (request.OrderBy is not null &&
+                string.Equals(request.OrderBy, property.Name, StringComparison.OrdinalIgnoreCase))
                 orderBy = o => GetPropValue(o, property.Name).ToString();
         }
 

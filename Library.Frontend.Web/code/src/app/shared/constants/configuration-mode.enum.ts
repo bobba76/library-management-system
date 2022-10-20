@@ -10,4 +10,3 @@ const configurationModeName = new Map<ConfigurationMode, string>([
 ]);
 
 export { ConfigurationMode, configurationModeName };
-

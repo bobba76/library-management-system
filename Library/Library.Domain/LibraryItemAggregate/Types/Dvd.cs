@@ -59,9 +59,8 @@ public class Dvd : LibraryItem
             libraryItem.CategoryId = categoryId;
 
         if (title is not null)
-            libraryItem.Title = title.Trim();
+            libraryItem.Title = title;
 
-        // TODO: Checka om is not null endast är värden över 0. Eller om alla värden, inklusive 0 och negativa räknas som true
         if (runTimeMinutes is not null)
             libraryItem.RunTimeMinutes = runTimeMinutes;
 

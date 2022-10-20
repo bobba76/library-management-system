@@ -24,7 +24,9 @@
         <clr-icon shape="angle down"></clr-icon>
       </button>
       <clr-dropdown-menu *clrIfOpen clrPosition="bottom-right">
-        <a (click)="updateConnectionString()" clrDropdownItem>Ändra Connection String</a>
+        <a (click)="updateConnectionString()" clrDropdownItem
+          >Ändra Connection String</a
+        >
         <a (click)="resetData()" clrDropdownItem>Återställ data</a>
         <a (click)="deleteAllData()" clrDropdownItem>Rensa data</a>
       </clr-dropdown-menu>

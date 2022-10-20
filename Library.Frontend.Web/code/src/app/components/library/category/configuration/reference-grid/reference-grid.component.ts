@@ -1,12 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Select, Store } from '@ngxs/store';
+import { Select } from '@ngxs/store';
 import { map, Observable } from 'rxjs';
 
 import { CategoryModel } from '@models/category/category.model';
 import { LibraryItemModel } from '@models/library-item/library-item.model';
 import { CategoryState } from '@services/category/category.state';
-import { LibraryItemActions } from '@services/library-item/library-item.action';
 import { LibraryItemState } from '@services/library-item/library-item.state';
 
 @Component({
@@ -14,26 +13,14 @@ import { LibraryItemState } from '@services/library-item/library-item.state';
   templateUrl: './reference-grid.component.html',
   styleUrls: ['./reference-grid.component.scss'],
 })
-export class ConfigurationReferenceGridComponent implements OnInit {
+export class ConfigurationReferenceGridComponent {
   @Select(CategoryState.getCategory) category$: Observable<CategoryModel>;
   @Select(LibraryItemState.getLibraryItems) libraryItems$: Observable<
     Array<LibraryItemModel>
   >;
   selected = new Array<LibraryItemModel>();
 
-  constructor(
-    private store: Store,
-    private route: ActivatedRoute,
-    private router: Router
-  ) {}
-
-  ngOnInit(): void {
-    this.getLibraryItems();
-  }
-
-  getLibraryItems(): void {
-    this.store.dispatch(new LibraryItemActions.Get());
-  }
+  constructor(private route: ActivatedRoute, private router: Router) {}
 
   getLibraryItemReferences(): Observable<Array<LibraryItemModel>> {
     const id = parseInt(this.route.snapshot.paramMap.get('id'));

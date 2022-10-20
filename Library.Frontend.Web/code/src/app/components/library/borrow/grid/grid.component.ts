@@ -8,7 +8,7 @@ import {
   LibraryItemModel,
   LibraryItemType,
   libraryItemTypeName,
-  UpdateLibraryItemInputModel
+  UpdateLibraryItemInputModel,
 } from '@models/library-item/library-item.model';
 import { LibraryItemActions } from '@services/library-item/library-item.action';
 import { LibraryItemState } from '@services/library-item/library-item.state';

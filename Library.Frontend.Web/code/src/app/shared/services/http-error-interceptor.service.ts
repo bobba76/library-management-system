@@ -3,7 +3,7 @@ import {
   HttpEvent,
   HttpHandler,
   HttpInterceptor,
-  HttpRequest
+  HttpRequest,
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { EMPTY, Observable } from 'rxjs';
@@ -28,7 +28,9 @@ export class HttpErrorInterceptor implements HttpInterceptor {
           );
         }
 
-        alert('Oh ohhh, an error occured. Please check Console Log for more information.')
+        alert(
+          'Oh ohhh, an error occured. Please check Console Log for more information.'
+        );
         // If you want to return a new response:
         //return of(new HttpResponse({body: [{name: "Default value..."}]}));
 

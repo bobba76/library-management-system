@@ -9,7 +9,6 @@ import { LibraryItemActions } from '@services/library-item/library-item.action';
   styleUrls: ['./category.component.scss'],
 })
 export class CategoryComponent implements OnDestroy {
-  
   constructor(private store: Store) {}
 
   ngOnDestroy(): void {

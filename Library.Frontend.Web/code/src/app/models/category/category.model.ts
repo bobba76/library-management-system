@@ -18,9 +18,4 @@ type UpdateCategoryInputModel = {
   categoryName: string;
 };
 
-export {
-  CategoryModel,
-  CreateCategoryInputModel,
-  UpdateCategoryInputModel,
-};
-
+export { CategoryModel, CreateCategoryInputModel, UpdateCategoryInputModel };

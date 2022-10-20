@@ -7,7 +7,6 @@ import { EmployeeActions } from '@services/employee/employee.action';
   styleUrls: ['./employee.component.scss'],
 })
 export class EmployeeComponent implements OnDestroy {
-  
   constructor(private store: Store) {}
 
   ngOnDestroy(): void {

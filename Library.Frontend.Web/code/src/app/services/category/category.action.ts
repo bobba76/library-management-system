@@ -1,5 +1,7 @@
 import {
-  CategoryModel, CreateCategoryInputModel, UpdateCategoryInputModel
+  CategoryModel,
+  CreateCategoryInputModel,
+  UpdateCategoryInputModel,
 } from '@models/category/category.model';
 
 export namespace CategoryActions {

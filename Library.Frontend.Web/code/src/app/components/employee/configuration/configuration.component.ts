@@ -10,13 +10,13 @@ import {
   EmployeeModel,
   EmployeeRole,
   salaryCoefficient,
-  UpdateEmployeeInputModel
+  UpdateEmployeeInputModel,
 } from '@models/employee/employee.model';
 import { EmployeeActions } from '@services/employee/employee.action';
 import { EmployeeState } from '@services/employee/employee.state';
 import {
   ConfigurationMode,
-  configurationModeName
+  configurationModeName,
 } from '@shared/constants/configuration-mode.enum';
 import { FormService } from '@shared/services/form.service';
 
@@ -101,8 +101,8 @@ export class EmployeeConfigurationComponent implements OnInit, OnDestroy {
     this.store.dispatch(new EmployeeActions.GetById(id));
   }
 
-  getEmployees(): Observable<Array<EmployeeModel>> {
-    return this.store.dispatch(EmployeeActions.Get);
+  getEmployees(): void {
+    this.store.dispatch(new EmployeeActions.Get());
   }
 
   // #region Form

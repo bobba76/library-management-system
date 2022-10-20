@@ -16,8 +16,7 @@ public class Book : LibraryItem
 
     private static Book Create(int categoryId, string title, string? author, int? pages)
     {
-        // TODO: Checka vad som händer vid null
-        if (author?.Trim().Length is < 1 or > 64)
+        if (author?.Length is < 1 or > 64)
             throw new ArgumentException(
                 $"Value must be between 1 - 64 characters. (Parameter '{nameof(author)}', Value '{author}')");
 
@@ -31,6 +30,7 @@ public class Book : LibraryItem
             Title = title,
             Pages = pages,
             IsBorrowable = true,
+            Author = author,
             Type = LibraryItemType.Book
         };
 
@@ -66,10 +66,10 @@ public class Book : LibraryItem
             libraryItem.CategoryId = categoryId;
 
         if (title is not null)
-            libraryItem.Title = title.Trim();
+            libraryItem.Title = title;
 
         if (author is not null)
-            libraryItem.Author = author.Trim();
+            libraryItem.Author = author;
 
         if (pages is not null)
             libraryItem.Pages = pages;

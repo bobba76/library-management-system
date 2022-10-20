@@ -7,17 +7,18 @@ import { first, Observable } from 'rxjs';
 
 import {
   ConfigurationMode,
-  configurationModeName
+  configurationModeName,
 } from '@shared/constants/configuration-mode.enum';
 import { FormService } from '@shared/services/form.service';
 
 import {
   CategoryModel,
   CreateCategoryInputModel,
-  UpdateCategoryInputModel
+  UpdateCategoryInputModel,
 } from '@models/category/category.model';
 import { CategoryActions } from '@services/category/category.action';
 import { CategoryState } from '@services/category/category.state';
+import { LibraryItemActions } from '@services/library-item/library-item.action';
 
 @Component({
   selector: 'category-configuration',
@@ -65,6 +66,7 @@ export class CategoryConfigurationComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.store.dispatch(CategoryActions.ClearStore);
+    this.store.dispatch(LibraryItemActions.ClearStore);
   }
 
   setConfigurationMode(id: string): void {
@@ -76,10 +78,15 @@ export class CategoryConfigurationComponent implements OnInit, OnDestroy {
     }
 
     this.configurationMode = ConfigurationMode.Edit;
+    this.getLibraryItems();
   }
 
   getCategoryById(id: number): void {
     this.store.dispatch(new CategoryActions.GetById(id));
+  }
+
+  getLibraryItems(): void {
+    this.store.dispatch(new LibraryItemActions.Get());
   }
 
   // #region Form

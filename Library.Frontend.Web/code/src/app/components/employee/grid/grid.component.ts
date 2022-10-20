@@ -8,7 +8,7 @@ import { ConfigurationMode } from '@shared/constants/configuration-mode.enum';
 import {
   EmployeeModel,
   EmployeeRole,
-  employeeRoleName
+  employeeRoleName,
 } from '@models/employee/employee.model';
 import { EmployeeActions } from '@services/employee/employee.action';
 import { EmployeeState } from '@services/employee/employee.state';

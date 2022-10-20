@@ -102,7 +102,7 @@ public class CategoryRepository : SQLRepository<Category>, ICategoryRepository
     {
         const string commandText = @"
             UPDATE categories
-            SET categoryName = @categoryName,
+            SET category_name = @categoryName
             WHERE id = @id";
 
 

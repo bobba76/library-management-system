@@ -131,7 +131,7 @@ public class LibraryItemRepository : SQLRepository<LibraryItem>, ILibraryItemRep
     {
         const string commandText = @"
         INSERT INTO library_items 
-        VALUES(@categoryId @title, @author, @pages, @runTimeMinutes, @isBorrowable, @borrower, @borrowDate, @type)
+        VALUES(@categoryId, @title, @author, @pages, @runTimeMinutes, @isBorrowable, @borrower, @borrowDate, @type)
         ";
 
         await using var connection = new SqlConnection(_connectionString);
@@ -142,12 +142,12 @@ public class LibraryItemRepository : SQLRepository<LibraryItem>, ILibraryItemRep
         cmd.Parameters.Add(new SqlParameter("@title", SqlDbType.NVarChar)).Value = entity.Title;
         cmd.Parameters.Add(new SqlParameter("@author", SqlDbType.NVarChar)).Value = entity.Author;
         cmd.Parameters.Add(new SqlParameter("@pages", SqlDbType.Int)).Value =
-            entity.Pages.GetValueOrDefault(0) == 0 ? DBNull.Value : entity.Pages;
+            entity.Pages is null ? DBNull.Value : entity.Pages;
         cmd.Parameters.Add(new SqlParameter("@runTimeMinutes", SqlDbType.Int)).Value =
-            entity.RunTimeMinutes.GetValueOrDefault(0) == 0 ? DBNull.Value : entity.RunTimeMinutes;
+            entity.RunTimeMinutes is null ? DBNull.Value : entity.RunTimeMinutes;
         cmd.Parameters.Add(new SqlParameter("@isBorrowable", SqlDbType.Bit)).Value = entity.IsBorrowable;
-        cmd.Parameters.Add(new SqlParameter("@borrower", SqlDbType.NVarChar)).Value = entity.Borrower;
-        cmd.Parameters.Add(new SqlParameter("@borrowDate", SqlDbType.Date)).Value = entity.BorrowDate;
+        cmd.Parameters.Add(new SqlParameter("@borrower", SqlDbType.NVarChar)).Value = DBNull.Value;
+        cmd.Parameters.Add(new SqlParameter("@borrowDate", SqlDbType.Date)).Value = DBNull.Value;
         cmd.Parameters.Add(new SqlParameter("@type", SqlDbType.Int)).Value = (int) entity.Type;
 
         await cmd.ExecuteNonQueryAsync(cancellationToken);
@@ -176,15 +176,15 @@ public class LibraryItemRepository : SQLRepository<LibraryItem>, ILibraryItemRep
         await using var cmd = new SqlCommand(commandText, connection);
         cmd.Parameters.Add(new SqlParameter("@id", SqlDbType.Int)).Value = entity.Id;
         cmd.Parameters.Add(new SqlParameter("@categoryId", SqlDbType.NVarChar)).Value =
-            entity.CategoryId.GetValueOrDefault(0) == 0 ? DBNull.Value : entity.CategoryId;
+            entity.CategoryId is null ? DBNull.Value : entity.CategoryId;
         cmd.Parameters.Add(new SqlParameter("@title", SqlDbType.NVarChar)).Value =
             entity.Title is null ? DBNull.Value : entity.Title;
         cmd.Parameters.Add(new SqlParameter("@author", SqlDbType.NVarChar)).Value =
             entity.Author is null ? DBNull.Value : entity.Author;
         cmd.Parameters.Add(new SqlParameter("@pages", SqlDbType.Int)).Value =
-            entity.Pages.GetValueOrDefault(0) == 0 ? DBNull.Value : entity.Pages;
+            entity.Pages is null ? DBNull.Value : entity.Pages;
         cmd.Parameters.Add(new SqlParameter("@runTimeMinutes", SqlDbType.Int)).Value =
-            entity.RunTimeMinutes.GetValueOrDefault(0) == 0 ? DBNull.Value : entity.RunTimeMinutes;
+            entity.RunTimeMinutes is null ? DBNull.Value : entity.RunTimeMinutes;
         cmd.Parameters.Add(new SqlParameter("@isBorrowable", SqlDbType.Bit)).Value = entity.IsBorrowable;
         cmd.Parameters.Add(new SqlParameter("@borrower", SqlDbType.NVarChar)).Value =
             entity.Borrower is null ? DBNull.Value : entity.Borrower;

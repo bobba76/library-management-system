@@ -33,7 +33,7 @@ public class UpdateEmployeeCommandHandler : IRequestHandler<UpdateEmployeeComman
 
                 var managerToEmployees = employees.Count(e =>
                     e.Role.Equals(EmployeeRole.Employee) &&
-                    e.ManagerId.GetValueOrDefault(0) != 0 &&
+                    e.ManagerId is not null &&
                     e.ManagerId.Equals(request.Id));
 
                 if (managerToEmployees > 0)
@@ -46,7 +46,7 @@ public class UpdateEmployeeCommandHandler : IRequestHandler<UpdateEmployeeComman
             {
                 var mangerIsCeo = employees.Any(e =>
                     e.Role.Equals(EmployeeRole.Ceo) &&
-                    request.ManagerId.GetValueOrDefault(0) != 0 &&
+                    request.ManagerId is not null &&
                     e.Id.Equals(request.ManagerId));
 
                 if (mangerIsCeo)
@@ -54,7 +54,7 @@ public class UpdateEmployeeCommandHandler : IRequestHandler<UpdateEmployeeComman
                         $"Employee cannot have {EmployeeRole.Ceo} as Manager. Only employees with role {EmployeeRole.Manager} can. (Parameter '{nameof(request.Role)}, Value '{request.Role}')");
 
                 var managerToAnybody = employees.Count(e =>
-                    e.ManagerId.GetValueOrDefault(0) != 0 &&
+                    e.ManagerId is not null &&
                     e.ManagerId.Equals(request.Id));
 
                 if (managerToAnybody > 0)
@@ -66,14 +66,14 @@ public class UpdateEmployeeCommandHandler : IRequestHandler<UpdateEmployeeComman
 
         var managerIsEmployee = employees.Any(e =>
             e.Role.Equals(EmployeeRole.Employee) &&
-            request.ManagerId.GetValueOrDefault(0) != 0 &&
+            request.ManagerId is not null &&
             e.Id.Equals(request.ManagerId));
 
         if (managerIsEmployee)
             throw new ArgumentException(
                 $"Employee cannot have {EmployeeRole.Employee} as Manager. An employee with role {EmployeeRole.Employee} cannot manage other employees. (Parameter '{nameof(request.ManagerId)}, Value '{request.ManagerId}')");
 
-        if (request.ManagerId != null && request.ManagerId.Equals(request.Id))
+        if (request.ManagerId is not null && request.ManagerId.Equals(request.Id))
             throw new ArgumentException(
                 $"Employee cannot be Manager to themself. (Parameter '{nameof(request.ManagerId)}', Value '{request.ManagerId}', Parameter '{nameof(request.Id)}', Value '{request.Id}'))");
 

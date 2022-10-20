@@ -8,7 +8,7 @@ import { EndPointController } from '@shared/constants/endpoint-controller.enum';
 import {
   CategoryModel,
   CreateCategoryInputModel,
-  UpdateCategoryInputModel
+  UpdateCategoryInputModel,
 } from '@models/category/category.model';
 
 @Injectable()

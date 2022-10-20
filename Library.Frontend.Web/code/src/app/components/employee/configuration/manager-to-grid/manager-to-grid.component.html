@@ -26,7 +26,10 @@
     *clrDgItems="let employee of getManagerReferences() | async"
     [clrDgItem]="employee"
   >
-    <clr-dg-cell>{{ employee.id }} - {{ employee.firstName }} {{ employee.lastName }}</clr-dg-cell>
+    <clr-dg-cell
+      >{{ employee.id }} - {{ employee.firstName }}
+      {{ employee.lastName }}</clr-dg-cell
+    >
     <clr-dg-cell>{{ getEmployeeRoleName(employee.role) }}</clr-dg-cell>
   </clr-dg-row>
 

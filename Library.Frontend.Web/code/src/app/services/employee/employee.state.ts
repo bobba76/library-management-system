@@ -4,7 +4,7 @@ import { Action, Selector, State, StateContext } from '@ngxs/store';
 import {
   EmployeeModel,
   EmployeeRole,
-  employeeRoleName
+  employeeRoleName,
 } from '@models/employee/employee.model';
 import { first, tap } from 'rxjs';
 import { EmployeeActions } from './employee.action';

@@ -32,7 +32,7 @@ public class LibraryItem : Entity
 
     private static void Create(string title, LibraryItemType type)
     {
-        if (title.Trim().Length is < 1 or > 64)
+        if (title.Length is < 1 or > 64)
             throw new ArgumentException(
                 $"Value must be between 1 - 64 characters. (Parameter '{nameof(title)}', Value '{title}')");
 
@@ -51,7 +51,7 @@ public class LibraryItem : Entity
 
     private static void Update(string? title, LibraryItemType type)
     {
-        if (!string.IsNullOrWhiteSpace(title) && title.Length is < 1 or > 64)
+        if (title?.Length is < 1 or > 64)
             throw new ArgumentException(
                 $"Value must be between 1 - 64 characters OR null. (Parameter '{nameof(title)}', Value '{title}')");
 

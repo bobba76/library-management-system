@@ -8,7 +8,7 @@ import { EndPointController } from '@shared/constants/endpoint-controller.enum';
 import {
   CreateEmployeeInputModel,
   EmployeeModel,
-  UpdateEmployeeInputModel
+  UpdateEmployeeInputModel,
 } from '@models/employee/employee.model';
 
 @Injectable()

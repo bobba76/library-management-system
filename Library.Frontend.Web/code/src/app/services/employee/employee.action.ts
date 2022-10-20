@@ -1,7 +1,7 @@
 import {
   CreateEmployeeInputModel,
   EmployeeModel,
-  UpdateEmployeeInputModel
+  UpdateEmployeeInputModel,
 } from '@models/employee/employee.model';
 
 export namespace EmployeeActions {

@@ -7,7 +7,7 @@ import { first, Observable } from 'rxjs';
 
 import {
   ConfigurationMode,
-  configurationModeName
+  configurationModeName,
 } from '@shared/constants/configuration-mode.enum';
 import { FormService } from '@shared/services/form.service';
 
@@ -15,7 +15,7 @@ import {
   CreateLibraryItemInputModel,
   LibraryItemModel,
   LibraryItemType,
-  UpdateLibraryItemInputModel
+  UpdateLibraryItemInputModel,
 } from '@models/library-item/library-item.model';
 import { LibraryItemActions } from '@services/library-item/library-item.action';
 import { LibraryItemState } from '@services/library-item/library-item.state';
@@ -229,7 +229,9 @@ export class LibraryItemConfigurationComponent implements OnInit, OnDestroy {
   }
 
   formIsInvalid(): boolean {
-    return this.form.invalid || this.form.pristine || this.typeOfBookFormInvalid();
+    return (
+      this.form.invalid || this.form.pristine || this.typeOfBookFormInvalid()
+    );
   }
 
   typeOfBookFormInvalid(): boolean {

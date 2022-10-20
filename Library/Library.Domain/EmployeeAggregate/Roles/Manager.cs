@@ -27,7 +27,7 @@ public class Manager : EmployeeBase
             Role = EmployeeRole.Manager
         };
 
-        if (managerId.GetValueOrDefault(0) != 0)
+        if (managerId is not null)
             employee.ManagerId = managerId;
 
         return employee;
@@ -56,13 +56,12 @@ public class Manager : EmployeeBase
         };
 
         if (firstName is not null)
-            employee.FirstName = firstName.Trim();
+            employee.FirstName = firstName;
 
         if (lastName is not null)
-            employee.LastName = lastName.Trim();
+            employee.LastName = lastName;
 
-        // TODO: Checka om is not null funkar också
-        if (managerId.GetValueOrDefault(0) != 0)
+        if (managerId is not null)
             employee.ManagerId = managerId;
 
         return employee;

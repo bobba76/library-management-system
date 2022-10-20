@@ -19,7 +19,7 @@ public class Ceo : EmployeeBase
     private static Ceo Create(string firstName, string lastName,
         int salary, int? managerId)
     {
-        if (managerId.GetValueOrDefault(0) != 0)
+        if (managerId is not null)
             throw new ArgumentException(
                 $"Value must be null. {EmployeeRole.Ceo} cannot have a {EmployeeRole.Manager}. (Parameter '{nameof(managerId)}, Value '{managerId}'')");
 
@@ -49,7 +49,7 @@ public class Ceo : EmployeeBase
 
     private static Ceo Update(int id, string? firstName, string? lastName, int salary, int? managerId)
     {
-        if (managerId.GetValueOrDefault(0) != 0)
+        if (managerId is not null)
             throw new ArgumentException(
                 $"Value must be null. {EmployeeRole.Ceo} cannot have a {EmployeeRole.Manager}. (Parameter '{nameof(managerId)}', Value '{managerId}')");
 
@@ -61,10 +61,10 @@ public class Ceo : EmployeeBase
         };
 
         if (firstName is not null)
-            employee.FirstName = firstName.Trim();
+            employee.FirstName = firstName;
 
         if (lastName is not null)
-            employee.LastName = lastName.Trim();
+            employee.LastName = lastName;
 
         return employee;
     }

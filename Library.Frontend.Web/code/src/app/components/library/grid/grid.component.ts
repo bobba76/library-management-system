@@ -5,7 +5,7 @@ import { first, mergeMap, Observable } from 'rxjs';
 import {
   LibraryItemModel,
   LibraryItemType,
-  libraryItemTypeName
+  libraryItemTypeName,
 } from '@models/library-item/library-item.model';
 import { LibraryItemActions } from '@services/library-item/library-item.action';
 import { LibraryItemState } from '@services/library-item/library-item.state';
@@ -67,6 +67,9 @@ export class LibraryGridComponent implements OnInit {
   }
 
   getAcronym(word: string): string {
-    return word.match(/\b(\w)/g).join('').toUpperCase();
+    return word
+      .match(/\b(\w)/g)
+      .join('')
+      .toUpperCase();
   }
 }

@@ -1,7 +1,7 @@
 import {
   CreateLibraryItemInputModel,
   LibraryItemModel,
-  UpdateLibraryItemInputModel
+  UpdateLibraryItemInputModel,
 } from '@models/library-item/library-item.model';
 
 export namespace LibraryItemActions {

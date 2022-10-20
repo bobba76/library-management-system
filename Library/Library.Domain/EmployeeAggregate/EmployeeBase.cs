@@ -27,11 +27,11 @@ public class EmployeeBase : Entity
     private static void Create(string firstName, string lastName,
         int salary, EmployeeRole role)
     {
-        if (firstName.Trim().Length is < 1 or > 64)
+        if (firstName.Length is < 1 or > 64)
             throw new ArgumentException(
                 $"Value must be between 1 - 64 characters. (Parameter '{nameof(firstName)}', Value '{firstName}')");
 
-        if (lastName.Trim().Length is < 1 or > 64)
+        if (lastName.Length is < 1 or > 64)
             throw new ArgumentException(
                 $"Value must be between 1 - 64 characters. (Parameter '{nameof(lastName)}', Value '{lastName}')");
 
@@ -56,11 +56,11 @@ public class EmployeeBase : Entity
 
     private static void Update(string? firstName, string? lastName, int salary, EmployeeRole role)
     {
-        if (firstName?.Trim().Length is < 1 or > 64)
+        if (firstName?.Length is < 1 or > 64)
             throw new ArgumentException(
                 $"Value must be between 1 - 64 characters OR null. (Parameter '{nameof(firstName)}', Value '{firstName}')");
 
-        if (lastName?.Trim().Length is < 1 or > 64)
+        if (lastName?.Length is < 1 or > 64)
             throw new ArgumentException(
                 $"Value must be between 1 - 64 characters OR null. (Parameter '{nameof(lastName)}', Value '{lastName}')");
 

@@ -20,7 +20,9 @@ public class UpdateCategoryCommandHandler : IRequestHandler<UpdateCategoryComman
     {
         var categories = await _categoryRepository.GetAsync(cancellationToken);
 
-        var categoryExists = categories.Any(e => e.CategoryName.Equals(request.CategoryName));
+        var categoryExists = categories.Any(e =>
+            string.Equals(e.CategoryName, request.CategoryName, StringComparison.OrdinalIgnoreCase));
+
 
         if (categoryExists)
             throw new ArgumentException(

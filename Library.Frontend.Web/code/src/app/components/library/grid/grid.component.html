@@ -38,14 +38,21 @@
     *clrDgItems="let libraryItem of libraryItems$ | async"
     [clrDgItem]="libraryItem"
   >
-    <clr-dg-cell>({{ getAcronym(libraryItem.title) }}) {{ libraryItem.title }}</clr-dg-cell>
+    <clr-dg-cell
+      >({{ getAcronym(libraryItem.title) }})
+      {{ libraryItem.title }}</clr-dg-cell
+    >
     <clr-dg-cell>{{ getCategoryName(libraryItem.categoryId) }}</clr-dg-cell>
     <clr-dg-cell>{{ getLibraryItemTypeName(libraryItem.type) }}</clr-dg-cell>
     <clr-dg-cell>{{ libraryItem.author }}</clr-dg-cell>
-    <clr-dg-cell>{{ libraryItem.pages > 0 ? libraryItem.pages : null }}</clr-dg-cell>
-    <clr-dg-cell>{{ libraryItem.runTimeMinutes > 0 ? libraryItem.runTimeMinutes : null }}</clr-dg-cell>
+    <clr-dg-cell>{{
+      libraryItem.pages > 0 ? libraryItem.pages : null
+    }}</clr-dg-cell>
+    <clr-dg-cell>{{
+      libraryItem.runTimeMinutes > 0 ? libraryItem.runTimeMinutes : null
+    }}</clr-dg-cell>
     <clr-dg-cell>{{ libraryItem.borrower }}</clr-dg-cell>
-    <clr-dg-cell>{{ libraryItem.borrowDate | date: 'yyyy-MM-dd' }}</clr-dg-cell>
+    <clr-dg-cell>{{ libraryItem.borrowDate | date: "yyyy-MM-dd" }}</clr-dg-cell>
 
     <clr-dg-cell class="center-text-h">
       <clr-icon

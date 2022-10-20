@@ -17,7 +17,6 @@ public class MappingProfile : Profile
 {
     public MappingProfile()
     {
-        // TODO: Testa kommentera ut och se mappning
         ApplyMappingsFromAssembly(typeof(IAmApi).Assembly);
     }
 
@@ -47,19 +46,33 @@ public class MappingProfile : Profile
         {
             var config = new MapperConfiguration(cfg =>
             {
-                cfg.CreateMap<CreateEmployeeInputModel, CreateEmployeeCommand>();
+                // Convert empty strings to nulls and trim the strings
+                // Convert int with value 0 and lower to null
+                cfg.CreateMap<CreateEmployeeInputModel, CreateEmployeeCommand>()
+                    .AddTransform<string?>(s => string.IsNullOrWhiteSpace(s) ? null : s.Trim())
+                    .AddTransform<int?>(i => i.GetValueOrDefault(0) <= 0 ? null : i);
                 cfg.CreateMap<CreateEmployeeCommand, CreateEmployeeParameters>();
-                cfg.CreateMap<UpdateEmployeeInputModel, UpdateEmployeeCommand>();
+                cfg.CreateMap<UpdateEmployeeInputModel, UpdateEmployeeCommand>()
+                    .AddTransform<string?>(s => string.IsNullOrWhiteSpace(s) ? null : s.Trim())
+                    .AddTransform<int?>(i => i.GetValueOrDefault(0) <= 0 ? null : i);
                 cfg.CreateMap<UpdateEmployeeCommand, UpdateEmployeeParameters>();
 
-                cfg.CreateMap<CreateLibraryItemInputModel, CreateLibraryItemCommand>();
+                cfg.CreateMap<CreateLibraryItemInputModel, CreateLibraryItemCommand>()
+                    .AddTransform<string?>(s => string.IsNullOrWhiteSpace(s) ? null : s.Trim())
+                    .AddTransform<int?>(i => i.GetValueOrDefault(0) <= 0 ? null : i);
                 cfg.CreateMap<CreateLibraryItemCommand, CreateLibraryItemParameters>();
-                cfg.CreateMap<UpdateLibraryItemInputModel, UpdateLibraryItemCommand>();
+                cfg.CreateMap<UpdateLibraryItemInputModel, UpdateLibraryItemCommand>()
+                    .AddTransform<string?>(s => string.IsNullOrWhiteSpace(s) ? null : s.Trim())
+                    .AddTransform<int?>(i => i.GetValueOrDefault(0) <= 0 ? null : i);
                 cfg.CreateMap<UpdateLibraryItemCommand, UpdateLibraryItemParameters>();
 
-                cfg.CreateMap<CreateCategoryInputModel, CreateCategoryCommand>();
+                cfg.CreateMap<CreateCategoryInputModel, CreateCategoryCommand>()
+                    .AddTransform<string?>(s => string.IsNullOrWhiteSpace(s) ? null : s.Trim())
+                    .AddTransform<int?>(i => i.GetValueOrDefault(0) <= 0 ? null : i);
                 cfg.CreateMap<CreateCategoryCommand, CreateCategoryParameters>();
-                cfg.CreateMap<UpdateCategoryInputModel, UpdateCategoryCommand>();
+                cfg.CreateMap<UpdateCategoryInputModel, UpdateCategoryCommand>()
+                    .AddTransform<string?>(s => string.IsNullOrWhiteSpace(s) ? null : s.Trim())
+                    .AddTransform<int?>(i => i.GetValueOrDefault(0) <= 0 ? null : i);
                 cfg.CreateMap<UpdateCategoryCommand, UpdateCategoryParameters>();
 
                 cfg.AddProfile<MappingProfile>();

@@ -37,7 +37,7 @@ public class CreateEmployeeCommandHandler : IRequestHandler<CreateEmployeeComman
             {
                 var mangerIsCeo = employees.Any(e =>
                     e.Role.Equals(EmployeeRole.Ceo) &&
-                    request.ManagerId.GetValueOrDefault(0) == 0 &&
+                    request.ManagerId is null &&
                     e.Id.Equals(request.ManagerId));
 
                 if (mangerIsCeo)
@@ -49,7 +49,7 @@ public class CreateEmployeeCommandHandler : IRequestHandler<CreateEmployeeComman
 
         var managerIsEmployee = employees.Any(e =>
             e.Role.Equals(EmployeeRole.Employee) &&
-            request.ManagerId.GetValueOrDefault(0) == 0 &&
+            request.ManagerId is null &&
             e.Id.Equals(request.ManagerId));
 
         if (managerIsEmployee)

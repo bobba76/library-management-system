@@ -62,4 +62,3 @@ export {
   CreateEmployeeInputModel,
   UpdateEmployeeInputModel,
 };
-

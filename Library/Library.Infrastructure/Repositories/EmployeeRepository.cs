@@ -110,7 +110,7 @@ public class EmployeeRepository : SQLRepository<EmployeeBase>, IEmployeeReposito
         cmd.Parameters.Add(new SqlParameter("@salary", SqlDbType.Decimal)).Value = entity.Salary;
         cmd.Parameters.Add(new SqlParameter("@role", SqlDbType.Int)).Value = (int) entity.Role;
         cmd.Parameters.Add(new SqlParameter("@managerId", SqlDbType.Int)).Value =
-            entity.ManagerId.GetValueOrDefault(0) == 0 ? DBNull.Value : entity.ManagerId;
+            entity.ManagerId is null ? DBNull.Value : entity.ManagerId;
 
         await cmd.ExecuteNonQueryAsync(cancellationToken);
     }
@@ -141,7 +141,7 @@ public class EmployeeRepository : SQLRepository<EmployeeBase>, IEmployeeReposito
         cmd.Parameters.Add(new SqlParameter("@salary", SqlDbType.Decimal)).Value = entity.Salary;
         cmd.Parameters.Add(new SqlParameter("@role", SqlDbType.Int)).Value = (int) entity.Role;
         cmd.Parameters.Add(new SqlParameter("@managerId", SqlDbType.Int)).Value =
-            entity.ManagerId.GetValueOrDefault(0) == 0 ? DBNull.Value : entity.ManagerId;
+            entity.ManagerId is null ? DBNull.Value : entity.ManagerId;
 
         await cmd.ExecuteNonQueryAsync(cancellationToken);
     }

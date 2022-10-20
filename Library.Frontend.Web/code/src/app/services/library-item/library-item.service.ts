@@ -8,7 +8,7 @@ import { EndPointController } from '@shared/constants/endpoint-controller.enum';
 import {
   CreateLibraryItemInputModel,
   LibraryItemModel,
-  UpdateLibraryItemInputModel
+  UpdateLibraryItemInputModel,
 } from '@models/library-item/library-item.model';
 
 @Injectable()

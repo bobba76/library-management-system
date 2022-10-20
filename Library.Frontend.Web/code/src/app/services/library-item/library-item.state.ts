@@ -4,7 +4,7 @@ import { Action, Selector, State, StateContext } from '@ngxs/store';
 import {
   LibraryItemModel,
   LibraryItemType,
-  libraryItemTypeName
+  libraryItemTypeName,
 } from '@models/library-item/library-item.model';
 import { first, tap } from 'rxjs';
 import { LibraryItemActions } from './library-item.action';
